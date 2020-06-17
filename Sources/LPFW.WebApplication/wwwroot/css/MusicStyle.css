@@ -1,93 +1,73 @@
-﻿@charset "utf-8";
-/* CSS Document */
-.music {
-    height: 150px;
-    width: 150px;
-    background: rgba(98,91,91,0.9);
+﻿* {
+    margin: 0;
+    padding: 0;
 }
 
-.pic_div {
-    position: relative;
+.photo {
+    width: 320px;
+    height: 600px;
+    background: linear-gradient(180deg,#ead6ee,#a0f1ea)fixed;
+    margin: 50px auto;
+    font-size: "微软雅黑 Light";
+    color: #2c606d;
+    border-radius: 5px;
+    box-shadow: 0 0 7px #ead5ee;
+    overflow: hidden;
 }
 
-.dot {
-    width: 15px;
-    height: 15px;
-    background: #464545;
-    position: absolute;
-    border: 2px solid white;
-    border-radius: 50%;
-    top: 40px;
-    left: 85px;
+.title {
+    margin-top: 5px;
+    width: 100%;
+    height: 70px;
+    font-size: 32px;
+    text-align: center;
+    line-height: 70px;
 }
 
-.disc {
-    width: 100px;
-    position: absolute;
-    right: 5px;
-    transform: rotate(30deg);
+.singer {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    text-align: center;
+    line-height: 40px;
 }
 
-#music_pic {
-    width: 100px;
-    position: absolute;
+.play {
+    width: 152px;
+    height: 163px;
+    background-image: url("../images/Music/index.png");
+    background-repeat: no-repeat;
+    margin: 20px auto;
 }
 
-.music_program {
-    height: 2px;
-    width: 100px;
-    background: #555;
-    position: relative;
-    top: 100px;
+.lrc {
+    width: 100%;
+    height: 220px;
+    margin: 50px auto;
+    text-align: center;
+    overflow: hidden;
 }
 
-    .music_program div {
-        height: 100%;
-        width: 0%;
-        background: red;
+    .lrc p {
+        line-height: 20px;
+        font-size: 15px;
     }
 
-.time {
-    width: 100px;
-    height: 20px;
+.content {
     position: relative;
-    top: 85px;
-    overflow: hide;
 }
 
-    .time p {
-        padding-left: 33px;
-    }
-
-        .time p span:nth-of-type(2) {
-            padding: 0 5px;
-        }
-
-.music_menu {
-    width: 150px;
-    height: 25px;
-    position: relative;
-    top: 85px;
+.play.rotate {
+    -webkit-animation: rot 5s linear infinite;
+    animation: rot 5s linear infinite;
 }
 
-    .music_menu span {
-        width: 30px;
-        height: 25px;
-        display: inline-block;
-        cursor: pointer;
+@keyframes rot {
+    from {
+        transform: rotate(0deg);
     }
 
-        .music_menu span:nth-of-type(1) {
-            margin-left: 8px;
-            background: url(../images/music/pictures/back.png) no-repeat 7px;
-        }
-
-        .music_menu span:nth-of-type(2) {
-            margin-left: 14px;
-            background: url(../images/music/pictures/play.png) no-repeat 10px;
-        }
-
-        .music_menu span:nth-of-type(3) {
-            margin-left: 14px;
-            background: url(../images/music/pictures/forward.png) no-repeat 7px;
-        }
+    to {
+        transform: rotate(360deg);
+    }
+}

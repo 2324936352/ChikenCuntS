@@ -1,148 +1,80 @@
 ﻿
-@{
-    ViewData["Title"] = "Index";
-}
 
-@*<audio src="" id="mymusic"></audio>
-    <div class="music">
-        <div class="pic_div">
-            <img src="~/images/empty_16_9.jpg" alt="" class="disc"><img src="~/images/MusicLog.jpg" alt="" id="music_pic"> <span class="dot"></span>
-            <div class="music_program">
-                <div id="prograss"></div>
-            </div>
-            <div class="time">
-                <p><span id="currenttime">0:00</span><span>/</span><span id="duration">0:00</span></p>
-            </div>
-            <div class="music_menu"> <span onClick="backMusic()"></span> <span onClick="playPause()" id="playbtn"></span> <span onClick="nextMusic()"></span> </div>
-        </div>
-    </div>*@
+    <textarea name="" id="txt" cols="30" rows="10" style="display: none;">
+        [00:00.00]Lemon - 米津玄師 (よねづ けんし)
+        [00:00.20]词：米津玄師
+        [00:00.30]曲：米津玄師
+        [00:01.60]夢ならば
+        [00:02.50]どれほどよかったでしょう
+        [00:06.96]未だにあなたのことを夢にみる
+        [00:12.14]忘れた物を取りに帰るように
+        [00:17.68]古びた思い出の埃を払う
+        [00:26.13]戻らない幸せがあることを
+        [00:31.43]最後にあなたが教えてくれた
+        [00:36.93]言えずに隠してた昏い過去も
+        [00:42.53]あなたがいなきゃ
+        [00:44.91]永遠に昏いまま
+        [00:48.67]きっともうこれ以上
+        [00:51.15]傷つくことなど
+        [00:53.80]ありはしないとわかっている
+        [00:58.54]あの日の悲しみさえ
+        [01:01.28]あの日の苦しみさえ
+        [01:04.11]そのすべてを愛してた
+        [01:07.04]あなたとともに
+        [01:09.64]胸に残り離れない
+        [01:12.59]苦いレモンの匂い
+        [01:15.65]雨が降り止むまでは帰れない
+        [01:21.30]今でもあなたはわたしの光
+        [01:37.93]暗闇であなたの背をなぞった
+        [01:43.16]その輪郭を鮮明に覚えている
+        [01:48.78]受け止めきれないものと
+        [01:51.81]出会うたび
+        [01:54.24]溢れてやまないのは涙だけ
+        [02:00.37]何をしていたの
+        [02:02.81]何を見ていたの
+        [02:05.58]わたしの知らない横顔で
+        [02:10.66]どこかであなたが今
+        [02:13.12]わたしと同じ様な
+        [02:15.92]涙にくれ
+        [02:17.31]淋しさの中にいるなら
+        [02:21.41]わたしのことなどどうか
+        [02:24.67]忘れてください
+        [02:27.48]そんなことを心から願うほどに
+        [02:33.17]今でもあなたはわたしの光
+        [02:41.76]自分が思うより
+        [02:46.96]恋をしていたあなたに
+        [02:52.37]あれから思うように
+        [02:58.00]息ができない
+        [03:03.58]あんなに側にいたのに
+        [03:08.97]まるで嘘みたい
+        [03:14.18]とても忘れられない
+        [03:19.80]それだけが確か
+        [03:30.69]あの日の悲しみさえ
+        [03:33.16]あの日の苦しみさえ
+        [03:35.87]そのすべてを愛してた
+        [03:38.67]あなたとともに
+        [03:41.27]胸に残り離れない
+        [03:44.41]苦いレモンの匂い
+        [03:47.29]雨が降り止むまでは帰れない
+        [03:52.83]切り分けた果実の片方の様に
+        [03:58.39]今でもあなたはわたしの光 
+    </textarea>
 
-<title>音乐播放器</title>
-
-    <div id="phone">
-        <div class="top"></div><!--顶部-->
-        <div class="tittle">晴天</div><!--歌曲名-->
-        <div class="singer">周杰伦</div><!--作者-->
-        <div class="play" id="play"></div><!--图片-->
+    <!-- 架子 -->
+    <article class="photo">
+        <div class="title">Lemon</div>
+        <div class="singer">米津玄师</div>
+        <div class="play"></div>
         <div class="lrc">
-            <div id="content"></div><!--存放歌词-->
+            <div class="content"></div>
         </div>
-    </div>
-    <audio src="music/周杰伦-晴天.mp3" id="mymusic"></audio><!--音乐-->
-    <textarea id="text" style="display:none"><!--歌词-->
-	[ar:晴天 周杰伦]
-	[ti: 晴天 周杰伦 ]
-	[00:00.71]晴天 - 周杰伦
-	[00:28.84]故事的小黄花
-	[00:32.34]从出生那年就飘着
-	[00:35.85]童年的荡秋千
-	[00:39.41]随记忆一直晃到现在
-	[00:42.77]rui sou sou xi dou xi la
-	[00:45.50]sou la xi xi xi xi la xi la sou
-	[00:49.41]吹着前奏望着天空
-	[00:52.60]我想起花瓣试着掉落
-	[00:56.10]为你翘课的那一天
-	[00:58.29]花落的那一天
-	[01:00.14]教室的那一间
-	[01:01.79]我怎么看不见
-	[01:03.61]消失的下雨天
-	[01:05.38]我好想再淋一遍
-	[01:09.51]没想到失去的勇气我还留着
-	[01:15.72]好想再问一遍
-	[01:17.47]你会等待还是离开
-	[01:24.46]刮风这天我试过握着你手
-	[01:30.18]但偏偏雨渐渐大到我看你不见
-	[01:38.50]还要多久我才能在你身边
-	[01:44.93]等到放晴的那天也许我会比较好一点
-	[01:52.41]从前从前有个人爱你很久
-	[01:58.07]但偏偏风渐渐把距离吹得好远
-	[02:06.44]好不容易又能再多爱一天
-	[02:12.81]但故事的最后你好像还是说了拜拜
-	[02:33.93]为你翘课的那一天
-	[02:36.39]花落的那一天
-	[02:38.13]教室的那一间
-	[02:39.84]我怎么看不见
-	[02:41.55]消失的下雨天
-	[02:43.31]我好想再淋一遍
-	[02:47.39]没想到失去的勇气我还留着
-	[02:53.39]好想再问一遍
-	[02:55.49]你会等待还是离开
-	[03:02.46]刮风这天我试过握着你手
-	[03:08.12]但偏偏雨渐渐大到我看你不见
-	[03:16.54]还要多久我才能在你身边
-	[03:23.10]等到放晴的那天也许我会比较好一点
-	[03:30.49]从前从前有个人爱你很久
-	[03:36.26]但偏偏风渐渐把距离吹得好远
-	[03:44.48]好不容易又能再多爱一天
-	[03:51.05]但故事的最后你好像还是说了拜拜
-	[03:57.65]刮风这天我试过握着你手
-	[04:01.45]但偏偏雨渐渐大到我看你不见
-	[04:04.98]还要多久我才能够在你身边
-	[04:08.64]等到放晴那天也许我会比较好一点
-	[04:12.34]从前从前有个人爱你很久
-	[04:15.40]但偏偏雨渐渐把距离吹得好远
-	[04:19.05]好不容易又能再多爱一天
-	[04:22.42]但故事的最后你好像还是说了拜
-	</textarea>
-    <script type="text/javascript">
-        var oPlay = document.getElementById("play");
-        var myMusic = document.getElementById("mymusic");
-        var oText = document.getElementById("text");
-        var oCon = document.getElementById("content");
-        var mark = true;//标记音乐播放的状态
-        oPlay.onclick = function () {
-            if (mark) {
-                myMusic.play();/*播放*/
-                this.className = "play rotate";
-                mark = false;
-            } else {
-                myMusic.pause();/*暂停*/
-                this.className = "play";
-                mark = true;
-            }
-        }
-        //获取歌词
-        var text = oText.value.split("[");//歌词从【切割开
-        //循环
-        var html = "";
-        for (var i = 0; i < text.length; i++) {
-            var txt = text[i].split("]");
-            //console.log(txt[1]);
-            var times = txt[0].split(".");//从.的位置切割
-            //console.log(times);
-            var time = times[0].split(":");//从:的位置切割
-            //console.log(times);
-            var ct = time[0] * 60 + time[1] * 1;
-            //console.log(ct);
-            //判断txt[1]是否存在
-            if (txt[1]) {
-                html += "<p id=" + ct + ">" + txt[1] + "</p>"
-            }
-        }
-        oCon.innerHTML = html;
-        //获取所有的P
-        var xP = oCon.getElementsByTagName("p");
-        var n = 0;
-        //console.log(html);
-        //监听歌曲的播放进度  歌词同步
-        myMusic.addEventListener("timeupdate", function () {
-            //当时间更新
-            var cur = parseInt(this.currentTime);
-            //console.log(cur);
-            if (document.getElementById(cur)) {
-                //先把所有的P标签颜色改为原色
-                for (var i = 0; i < xP.length; i++) {
-                    xP[i].style.color = "#ccc";
-                    xP[i].style.fontSize = "14px";
-                }
-                //当前P标签红色
-                document.getElementById(cur).style.color = "red"
-                document.getElementById(cur).style.fontSize = "18px"
-                if (xP[n + 8].id == cur) {
-                    oCon.style.top = -20 * n + "px";
-                    n++;
-                }
-            }
-        })
+    </article>
+    <audio controls="controls">
+       
+    </audio>
+    <audio id="myMusic" src="~/images/Music/Lemon.flac">
+        您的浏览器不支持音频播放！！！！
+    </audio>
 
-    </script>
+
+    

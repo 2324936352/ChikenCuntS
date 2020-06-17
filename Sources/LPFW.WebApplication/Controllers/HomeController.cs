@@ -18,7 +18,7 @@ namespace LPFW.WebApplication.Controllers
             {
                 new PublicLinkItemVM(){ Title="音乐管理", Description="修改音乐管理修改用户资源。", Url="/Music/Music" },
                 new PublicLinkItemVM(){ Title="堡垒音乐UI", Description="播放音乐，MV播放。", Url="/MusicUI/Home" },
-                new PublicLinkItemVM(){ Title="注册", Description="点开进来K歌吧。", Url="/MusicUI/Account/Register" },
+                //new PublicLinkItemVM(){ Title="注册", Description="点开进来K歌吧。", Url="/MusicUI/Account/Register" },
                 //new PublicLinkItemVM(){ Title="登录注册", Description="包括常规的课程学习内容管理子系统等。", Url="/Student" },
                 new PublicLinkItemVM(){ Title="音乐数据管理", Description="音乐数据的维护管理", Url="/News" },
                 //new PublicLinkItemVM(){ Title="框架模型演示", Description="包含最基本的应用模板的常规处理维护", Url="/XDemo" },
