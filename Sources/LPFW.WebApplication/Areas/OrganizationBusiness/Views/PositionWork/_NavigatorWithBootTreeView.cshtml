@@ -1,0 +1,53 @@
+﻿<!--
+  用于部门岗位管理的单位部门导航树    
+-->
+@model IEnumerable<LPFW.ViewModels.OrganizationBusiness.OrganizationSelectorVM>
+@{
+    var transactionCenterName = "组织名称";
+    var organizationName = "单位名称";
+    var currentItem = Model.FirstOrDefault(x => x.IsCurrent == true);
+    if (currentItem != null)
+    {
+        transactionCenterName = currentItem.TransactionCenterRegisterName;
+        organizationName = currentItem.OrganizationName;
+    }
+}
+<div class="card card-dark">
+    <div class="card-header" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid;">
+        <div>
+            <span>@transactionCenterName</span>
+            <h4>@organizationName</h4>
+        </div>
+        <div class='card-header-form'>
+            <div class='input-group'>
+                <!-- 待选的单位 -->
+                <div class="dropdown float-right">
+                    <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="margin-right:-5px">
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width:260px;padding-left:13px">
+                        @foreach (var item in Model)
+                        {
+                            if (!String.IsNullOrEmpty(item.OrganizationId))
+                            {
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="gotoSelectTreeView('@item.OrganizationId')">@item.DorpdownItemName</a>
+                            }
+                            else
+                            {
+                                <b>@item.DorpdownItemName</b>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 指定单位之下的部门导航树 -->
+    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+        <div id="navigatorTreeView"></div>
+    </div>
+</div>
+
+<!-- 当前的选中的单位 Id -->
+<input type="hidden" id="groupId" name="groupId" value="@ViewData["OrganizationId"]" />
+<!-- 当前的选中的部门 Id -->
+<input type="hidden" id="defaultTypeID" name="defaultTypeID" value="@ViewData["DepartamentId"]" />

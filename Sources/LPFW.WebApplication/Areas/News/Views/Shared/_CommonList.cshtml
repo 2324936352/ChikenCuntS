@@ -1,0 +1,64 @@
+﻿@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{ 
+
+    var tablelistItemCollection = ViewData["ListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 新建或者编辑对象的路径
+    var creatOrEditUrlString = controllerPath + "/CreateOrEdit/";
+    // 根据关键词检索列表数据的路径
+    var searchWithKeywordUrlString = controllerPath + "/List?keyword=";
+    // 明细数据路径
+    var detailUrlString = controllerPath + "/Detail/";
+    // 删除数据路径
+    var deleteUrlString = controllerPath + "/Delete/";
+    // 缺省的列表页路径
+    var defaultListUrlString =  controllerPath + "/List";
+}
+<div class="card card-dark"> 
+    <!-- 列表标题区 -->
+    @Html.CommonListCardHeader(ViewData["FunctionName"] as string, creatOrEditUrlString, searchWithKeywordUrlString)
+    <div class="card-body" style="padding-top:8px; overflow-y:auto" id="listContainer">
+        <div class="table-responsive" style="margin-top:-10px;border-top-style:solid;border-top-width:2px;border-top-color:darkblue">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr style="height:45px;background-color:whitesmoke">
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection,defaultListUrlString,"mainWorkPlaceArea")
+                        @Html.ListTableHeader("数据操作",80)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="height:30px;background-color:white;border-color:darkgray">
+                            @Html.ListTableDataForListItems(tablelistItemCollection,item)
+
+                            <td style="background-color:white;border-color:darkgray" class="text-center">
+                                <div style="margin-top:3px">
+                                    <!-- 以下几个方法在 appFunction.js 中创建，常规列表和分页列表均适用 -->
+                                    <a href="javascript:void(0)"
+                                       onclick="appGotoCreateOrEditWithPartialView('@item.Id','@creatOrEditUrlString','mainWorkPlaceArea')"
+                                       ><i class="far fa-edit"></i>
+                                    </a>
+                                    <a href="javascript:void(0)" 
+                                       onclick="appGotoDetailPartialView('@item.Id','@detailUrlString','mainWorkPlaceArea')"
+                                       ><i class="fas fa-list-ul text-info"></i>
+                                    </a>
+                                    @{ 
+                                        var deleteTip = "你所选择的数据：<span style=\"font-size:18px\">"+item.Name+"</span> <br> 将被删除，这个删除将永远无法恢复，请你确认是否删除。";
+                                     }
+                                    <a href="javascript:void(0)" 
+                                       onclick="appOpenDeleteItemModal('deleteItemModal', '@item.Id', '@deleteTip','@deleteUrlString','@defaultListUrlString','mainWorkPlaceArea')"
+                                       ><i class="fas fa-times text-warning"></i> 
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+             </table>
+        </div>
+    </div>
+</div>

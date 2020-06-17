@@ -1,0 +1,37 @@
+﻿@model IEnumerable<LPFW.ViewModels.ApplicationCommon.AppPathAndMenu.ApplicationMenuGroupVM>
+
+<section class="section">
+    <div class="section-header">
+        <h1>系统功能清单组织说明 </h1>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-3">
+                <div class="card card-dark">
+                    @*<div class="card-header" style="border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid">
+                        <h4>子系统清单</h4>基础业务管理
+                    </div>*@
+                    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+                        <div class="list-group list-group-flush">
+                            @foreach (var item in Model.OrderBy(x => x.SortCode))
+                            {
+                                <a class="list-group-item" id="list-messages-list" data-toggle="list" href="" role="tab">@item.Name</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9" id="commodityConfigArea">
+                <div class="card card-dark">
+                    <div class="card-header" style="border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid">
+                        <h4>系统基础数据管理</h4>
+                    </div>
+                    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+                        TBD
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,38 @@
+﻿<!--
+  部门员工清单    
+-->
+@model IEnumerable<LPFW.ViewModels.OrganizationBusiness.EmployeeVM>
+@using LPFW.HtmlHelper
+@{
+    var tablelistItemCollection = ViewData["EmployeeListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+    var entityController = ViewContext.RouteData.Values["controller"].ToString();
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath+"/List";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="table-responsive" style="margin-top:-10px;border-top-style:solid;border-top-width:1px;border-top-color:darkblue">
+            <table class="table table-bordered table-striped table-sm" style="">
+                <thead>
+                    <tr style="height:45px;background-color:whitesmoke">
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection, defaultListUrlString, "mainWorkPlaceArea")
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="height:30px;background-color:white;border-color:darkgray">
+                            @Html.ListTableDataForListItems(tablelistItemCollection, item)
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

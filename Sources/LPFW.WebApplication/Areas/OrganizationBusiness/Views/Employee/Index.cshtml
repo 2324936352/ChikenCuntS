@@ -1,0 +1,140 @@
+﻿<!--
+  部门员工数据处理入口：
+-->
+@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{
+    // 单位清单
+    var organizationSelectorCollection = ViewData["OrganizationCollection"] as List<LPFW.ViewModels.OrganizationBusiness.OrganizationSelectorVM>;
+
+    // 缺省单位 Id
+    var defaultOrganizationId = "";
+    var defdefaultOrganizationItem = organizationSelectorCollection.FirstOrDefault(x => x.IsCurrent == true);
+    if (defdefaultOrganizationItem != null)
+    {
+        defaultOrganizationId = defdefaultOrganizationItem.OrganizationId;
+    }
+
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 获取 bootStrapTreeView 导航树节点数据的路径
+    var navigatorItemDataPath02 = controllerPath + "/DataByGourpForBootStrapTreeView";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath + "/PaginateList";
+
+}
+
+@if (organizationSelectorCollection.Count == 0)
+{
+    <div class="alert alert-danger">
+        尚未配置任何与员工基础数据管理所依赖的部门数据，无法进行员工配置！
+    </div>
+}
+else
+{
+    <div class="row sm-gutters">
+        <div class="col-12 col-md-3 col-lg-3" id="navigatorPalceArea">
+            @await Html.PartialAsync("../../Views/Employee/_NavigatorWithBootTreeView", ViewData["OrganizationCollection"])
+        </div>
+        <!-- 主工作区，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+        <div class="col-12 col-md-9 col-lg-9" id="mainWorkPlaceArea">
+            @await Html.PartialAsync("../../Views/Employee/_List", Model)
+        </div>
+    </div>
+}
+
+<!-- 一组用于留存查询、分页、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetListPageParameter(pageParameter)
+
+<!-- 删除分页对象确认提交会话框 -->
+@await Html.PartialAsync("_PaginateCommonDeleteItemModal")
+
+<!-- 上传选择器会话框 -->
+@await Html.PartialAsync("_CommonBusinessFileCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessImageCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoCoverSelectorModal")
+@await Html.PartialAsync("_CommonAvatarSelectorModal")
+
+@section Scripts{
+    <script>
+
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 设置导航树节点
+            var oId = "@ViewData["OrganizationId"]";
+            if (oId !== "")
+            {
+                initialDepartmentTreeView("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea", oId);
+            }
+
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素。
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            appInitialBootstrapMultiselect("ApplicationRoleId");
+            // 初始化联系地址控件
+             _init_area();
+             _setAreaWithAddressVM();
+            // 刷新浏览器组件的高度
+            //appSetDivHeight("listContainer");
+            resetDivHeight();
+        }
+
+
+        /* 
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+        function initialDepartmentTreeView(divId, dataUrl, defaultString, mainWorkPlaceAreaId,typeId) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: dataUrl+"/"+typeId,
+                beforeSend: function () {
+                }
+            }).done(function (dataReusult) {
+                $('#'+divId).treeview({
+                    levels: 2,
+                    expandIcon: 'fa fa-angle-down',
+                    collapseIcon: 'fa fa-angle-right',
+                    emptyIcon: 'fa',
+                    nodeIcon: 'fa fa-list',
+                    selectedIcon: 'fa fa-list-alt',
+                    showBorder: false,
+                    data: dataReusult,
+                    onNodeSelected: function (event, node) {
+                        // 提取类型 Id，跳转至列表局部视图
+                        appGotoTypePaginatePage(node.id, defaultString, mainWorkPlaceAreaId);
+                    }
+                });
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+    </script>
+}

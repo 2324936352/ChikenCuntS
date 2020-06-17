@@ -1,0 +1,59 @@
+﻿@model LPFW.ViewModels.ApplicationCommon.RoleAndUser.LoginVM
+@{ 
+    //var re
+}
+<section class="section">
+    <div class="container mt-5">
+    <div class="row">
+        <div class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+        <div class="login-brand">
+            <h5>欢迎来到 Light Point </h5>
+        </div>
+        <div class="card card-primary">
+            <div class="card-header"><h4>系统登录</h4></div>
+            <div class="card-body">
+                <form method="POST" action="/Account/Login" class="needs-validation" novalidate="">
+                    <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="@Model.ReturnUrl" />
+                    <div class="form-group">
+                        <label for="email">用户名</label>
+                        <input id="UserName" type="text" class="form-control" name="UserName" tabindex="1" required autofocus>
+                        <div class="invalid-feedback">
+                            请填写用户名
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="d-block">
+                            <label for="password" class="control-label">密码</label>
+                            <div class="float-right">
+                                <a href="/Account/ForgotPassword" class="text-small">忘记密码？</a>
+                            </div>
+                        </div>
+                        <input id="Password" type="password" class="form-control" name="Password" tabindex="2" required>
+                        <div class="invalid-feedback">
+                            请输入密码
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="RememberMe" class="custom-control-input" tabindex="3" id="RememberMe" value="true">
+                            <label class="custom-control-label" for="RememberMe">记住我</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
+                            登录系统
+                        </button>
+                    </div>
+                    <div>
+                        <span class="text-danger field-validation-valid">@ViewData["LoginStatusString"]</span>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>

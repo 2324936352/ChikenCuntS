@@ -1,0 +1,251 @@
+﻿<!--
+  普通的数据处理入口：
+   1. 使用分页的数据列表；
+   2. 应用局部页处理新建、编辑和明细数据的显示 UI；
+   3. 使用会话框处理删除数据的确认以及删除错误以后的体视；
+   4. 使用列表数据的分类导航组件
+-->
+@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 获取 jsTree 导航树节点数据的路径
+    var navigatorItemDataPath01 = controllerPath + "/DataForJsTree";
+    // 获取 bootStrapTreeView 导航树节点数据的路径
+    var navigatorItemDataPath02 = controllerPath + "/DataForBootStrapTreeView";
+    // 缺省的列表页路径
+    var defaultListUrlString =  controllerPath + "/PaginateList";
+
+}
+
+<div class="row sm-gutters">
+    <div class="col-12 col-md-3 col-lg-3" id="navigatorPalceArea">
+        <partial name="_NavigatorWithBootTreeView" />
+    </div>
+    <!-- 主工作区，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+    <div class="col-12 col-md-9 col-lg-9" id="mainWorkPlaceArea">
+        <partial name="_PaginationCommonList" model="@Model" />
+    </div>
+</div>
+
+<!-- 一组用于留存查询、分页、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetListPageParameter(pageParameter)
+
+<!-- 删除分页对象确认提交会话框 -->
+<partial name="_PaginateCommonDeleteItemModal" />
+
+<!-- 上传选择器会话框 -->
+<partial name="_CommonBusinessFileCollectionSelectorModal" />
+<partial name="_CommonBusinessImageCollectionSelectorModal" />
+<partial name="_CommonBusinessVideoSelectorModal" />
+<partial name="_CommonBusinessVideoCoverSelectorModal" />
+<partial name="_CommonAvatarSelectorModal" />
+
+<!-- 加载商品选择器 -->
+<partial name="../../Views/Demo/DemoEntityWithOrder/_CommoditySelectorModal" />
+<partial name="../../Views/Demo/DemoEntityWithOrder/_CommodityMultiItemSelectorModal" />
+
+@section Scripts{
+    <script>
+
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 设置导航树节点
+            appInitialBootStrapTreeViewForPagination("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea");
+
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素。
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            // 刷新浏览器组件的高度
+            resetDivHeight();
+
+            // 以下几个调用是演示性质的，在实际应用中，如果需要处理的话，在这里自定义处理
+            appInitialBootstrapMultiselect("DemoItemForMultiSelectId");
+            appInitialSummernote("Content");
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+        /**
+         * 打开商品选择器
+         * id 订单 id
+         */
+        function openCommoditySelectorModal(id) {
+            // 打开 _CommoditySelectorModal
+            $('#commoditySelectorModal').modal({
+                show: true,
+                backdrop: 'static'
+            });
+
+            // 加载 _CommoditySelector 视图
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/CommoditySelector/' + id,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('commoditySelectorModalContent').innerHTML = data;
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        /**
+         * 查询商品
+         * id        订单 id
+         * keyword   关键词
+         */
+        function searchCommodity(id, keyword)
+        {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/CommoditySelectorSearch/' + id+'?keyword='+keyword,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('commoditySelectorModalContent').innerHTML = data;
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+
+        }
+
+        /**
+         * 添加商品到订单
+         * orderId  订单 id
+         * itemId   商品 id
+         */
+        function addCommodityToOrder(orderId, itemId) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/AddCommodityToOrder/' + orderId+'?itemId='+itemId,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页，注意，这里是直接渲染 _CreateOrEdit 局部视图的 listForModelSubitemCollection 的div，亦即条目列表
+                document.getElementById('listForModelSubitemCollection').innerHTML = data;
+                // 更新添加状态提示，可以在控制器 AddCommodityToOrder 方法中产生更为详细的信息，写到 _DemoEntityItemList 的某个隐含的 Input 里，在这里取出来显示
+                document.getElementById('commoditySelectorOperationResult').innerHTML = '商品添加成功';
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+
+        }
+
+        function openCommodityMultiItemSelectorModal(id) {
+            // 打开 _CommoditySelectorModal
+            $('#commodityMultiItemSelectorModal').modal({
+                show: true,
+                backdrop: 'static'
+            });
+
+            // 加载 _CommodityMultiItemSelector 视图
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/CommodityMultiItemSelector/' + id,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('commodityMultiItemSelectorModalContent').innerHTML = data;
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        function searchCommodityMultiItem(id, keyword)
+        {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/CommodityMultiItemSelectorSearch/' + id+'?keyword='+keyword,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('commodityMultiItemSelectorModalContent').innerHTML = data;
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+
+        }
+
+        function addCommodityMultiItemToOrder() {
+            var orderId = $('#multiSelectorOerderId').val();
+
+            // 定义一个数组，用于存储所选中的产品 Id
+            var itemIdCollection =  new Array();
+            var temp = $('input[name="selectedItemCollection"]:checked');
+            var counter = 0;
+            temp.each(function () {
+                itemIdCollection[counter] = $(this).val();
+                counter++;
+            });
+
+            // 这里提交到控制器端的 itemIdCollection 会转换为以逗号隔开的一组 Id 的集合，在服务器端进行分解处理
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Admin/DemoEntityWithOrder/AddCommodityMultiItemToOrder/' + orderId +'?itemIdCollection=' + itemIdCollection,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页，注意，这里是直接渲染 _CreateOrEdit 局部视图的 listForModelSubitemCollection 的div，亦即条目列表
+                document.getElementById('listForModelSubitemCollection').innerHTML = data;
+                // 更新添加状态提示，可以在控制器 AddCommodityToOrder 方法中产生更为详细的信息，写到 _DemoEntityItemList 的某个隐含的 Input 里，在这里取出来显示
+                document.getElementById('commodityMultiItemSelectorOperationResult').innerHTML = '商品添加成功';
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+
+        }
+
+    </script>
+}

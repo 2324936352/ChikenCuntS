@@ -1,0 +1,20 @@
+﻿<div class="modal fade" id="commoditySelectorModal" tabindex="-1" role="dialog" style="padding:0px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="padding-top:15px;padding-left:15px;border-bottom-style:dotted;border-bottom-color:darkblue;border-bottom-width:1px">
+                <h4 class="modal-title">商品选择器</h4>
+                <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="commoditySelectorModalContent" style="padding:0px">
+                <!-- 内容，在这里是通过访问控制器 CommoditySelector 方法返回的 _CommoditySelector.chtml 进行渲染填充的 -->
+            </div>
+            <div class="modal-footer">
+                <!-- 提交选择后数据处理的结果提示 -->
+                <div id="commoditySelectorOperationResult" class="text-info">请单击加入订单操作，每次添加一件商品，重复单击可以增加数量。</div>
+            </div>
+
+        </div>
+    </div>
+</div>

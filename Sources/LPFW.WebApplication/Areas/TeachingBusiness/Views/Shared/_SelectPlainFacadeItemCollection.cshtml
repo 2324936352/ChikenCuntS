@@ -1,0 +1,129 @@
+﻿@model LPFW.ViewModels.ApplicationCommon.SelectPlainFacadeItemCollectionVM
+@using LPFW.HtmlHelper
+@{ 
+
+    var defaultListUrlString = ViewData["DefaultListUrlString"] as string;
+    var formActionPath = ViewData["FormActionPath"] as string;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 style="font-size:22px;font-weight:normal;color:dimgray">@ViewData["SelectTitle"]</h4>
+        <div class="card-header-form">
+            <button class="btn btn-info" onclick="exitSelect('@defaultListUrlString','mainWorkPlaceArea')"><i class="fas fa-times"></i> 退出 </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <form id="selectPlainFacadeItemCollection" action="@formActionPath" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+            <!-- 隐藏的元素 -->
+            <input type="hidden" id="MasterId" name="MasterId" value="@Model.MasterId" />
+            <div class=" row">
+                <div class="col-6">
+                    <div class="card card-dark">
+                        <div class="card-header">
+                            <h4 style="font-size:22px;font-weight:normal;color:dimgray">待选数据</h4>
+                            <div class="card-header-form">
+                                <a href="javascript:void(0)" class="btn btn-info" onclick="submitSelectPlainFacadeItem()"><i class="fas fa-times"></i> 提交勾选项 </a>
+                            </div>
+                        </div>
+                            <div class="card-body">
+                                <table class="table tab-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <td width="90" class="text-center">
+                                                <a href="javascript:void(0)" class="btn btn-info btn-sm" onclick="selectAllPlainFacadeItem()"><i class="fas fa-times"></i> 全选 </a>
+                                            </td>
+                                            <td width="80" >序号</td>
+                                            <td>名称</td>
+                                        </tr>
+                                    </thead>
+                                    @{ 
+                                        var counter = 0;
+                                        foreach (var item in Model.TobeSelectPlainFacadeItemCollection)
+                                        {
+                                            ++counter;
+                                            if (!Model.SelectedPlainFacadeItemIdCollection.Contains(item.ID))
+                                            {
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="TobeSelecItem_@item.ID" name="TobeSelectPlainFacadeItemIdCollection">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        @counter
+                                                    </td>
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                        @counter
+                                                    </td>
+                                                    <td>
+                                                        @item.Name
+                                                    </td>
+                                                </tr>
+
+                                            }
+                                        }
+                                    }
+                                </table>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h4 class="float-lg-right" style="font-size:22px;font-weight:normal;color:dimgray">已选数据</h4>
+                            <div class="card-header-form float-left">
+                                <a href="javascript:void(0)" class="btn btn-info" onclick="submitUnelectPlainFacadeItem()"><i class="fas fa-times"></i> 提交勾选项 </a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table tab-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <td width="90" class="text-center">
+                                            <a href="javascript:void(0)" class="btn btn-info btn-sm" onclick="selectAllPlainFacadeItem()"><i class="fas fa-times"></i> 全选 </a>
+                                        </td>
+                                        <td width="80">序号</td>
+                                        <td>名称</td>
+                                    </tr>
+                                </thead>
+                                @{
+                                    var counter01 = 0;
+                                    foreach (var item in Model.SelectedPlainFacadeItemCollection)
+                                    {
+                                        ++counter;
+                                        <tr>
+                                            <td class="text-center">
+                                                <div class="form-check">
+                                                    <input type="checkbox" class="form-check-input" id="SelecItem_@item.ID" name="SelectedPlainFacadeItemIdCollection">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @counter01
+                                            </td>
+                                            <td>
+                                                @item.Name
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,16 @@
+﻿<!--
+    用于呈现视图模型数据操作的模态会话框，适用于承载承载任何使用局部视图实现的 UI，一般的使用包括： 
+    1. 打开这个模态框；
+    2. 执行向后台请求数据，并返回相关数据，根据数据的情况，渲染模态框的 dataOperationModalContent；
+    3. 根据模态框的 UI 执行操作，成功的话，关闭模态框；返回
+-->
+
+<div class="modal fade" id="dataOperationModal" tabindex="-1" role="dialog" style="padding:0px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body" id="dataOperationModalContent" style="padding:0px">
+                <!-- 内容，在这里是通过访问控制器 CreateOrEdit 方法返回的 _CreateOrEdit.chtml 进行渲染填充的 -->
+            </div>
+        </div>
+    </div>
+</div>

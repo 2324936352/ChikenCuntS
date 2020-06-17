@@ -1,0 +1,90 @@
+﻿@model LPFW.ViewModels.TeachingBusiness.CourseItemContentVM
+@using LPFW.HtmlHelper
+@{
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+    var formAction = "/" + areaPath + "/" + controllerPath + "/" + actionPath;
+
+    var itemName = "";
+    if (!String.IsNullOrEmpty(Model.CourseItemName))
+    {
+        itemName = Model.CourseName;
+    }
+    // 处理是否是新建对象的标签数据
+    var isNewString = "true";
+    if (!Model.IsNew)
+    {
+        isNewString = "false";
+    }
+
+    // 处理是否保存成功的数据标签对象
+    var IsSavedString = "false";
+    if (Model.IsSaved)
+    {
+        IsSavedString = "true";
+    }
+
+    // 获取编辑属性集合
+    var createOrEditItems = ViewData["CreateOrEditItems"] as List<LPFW.ViewModels.ControlModels.CreateOrEditItem>;
+
+}
+
+<input type="hidden" id="CourseId" name="CourseId" value="@Model.CourseId" />
+<input type="hidden" id="CourseName" name="CourseName" value="@Model.CourseName" />
+
+<div class="card card-dark">
+    <!-- 列表标题区 -->
+    <div class="card-header">
+        <h4 style="font-size:28px;font-weight:normal;color:dimgray">@itemName</h4>
+        <div class="card-header-form">
+            <div class="input-group">
+                @if (!String.IsNullOrEmpty(Model.CourseItemName))
+                {
+                    <button class="btn btn-info" onclick="gotoCreateOrEditCourseItem('@Model.CourseItemId','@Model.CourseId')"><i class='fas fa-edit'></i> 编辑当前单元</button>
+                    <button class="btn btn-info" onclick="gotoDeleteCourseItem('@Model.CourseItemId','@Model.CourseItemName','@Model.CourseId')"><i class='fas fa-random'></i> 删除当前单元</button>
+                }
+                <button class="btn btn-info" onclick="gotoCreateOrEditCourseItem('@Guid.NewGuid()','@Model.CourseId')"><i class="fas fa-plus"></i> 新增教学单元</button>
+                <button class="btn btn-outline-danger" onclick="gotoCourseItemContentDetail('@Model.CourseItemId')"><i class="fas fa-times"></i> 退出</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="padding-top:8px; overflow-y:auto" id="listContainer">
+        @if (String.IsNullOrEmpty(Model.CourseItemName))
+        {
+            <p> 尚未配置任何课程教学单元，请先添加教学单元，以便进行单元内容编辑。 </p>
+        }
+        else
+        {
+            <h4 style="font-size:22px;font-weight:normal;color:dimgray">@Model.CourseItemName</h4>
+            <hr style="height:1px;border:none;border-top:1px dotted #808080" />
+
+            <!-- 视频上传 -->
+            @Html.UploadVideoAndCover(Model.BusinessVideoVM, Model.BusinessVideoCoverPage)
+            <form id="CourseItemContentVM_CreateOrEdit" action="/TeachingBusiness/Course/SaveCourseItemContent" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+
+                <!-- 隐藏的元素 -->
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                <input type="hidden" id="IsNew" name="IsNew" value="@isNewString" />
+                <input type="hidden" id="IsSaved" name="IsSaved" value="@IsSavedString" />
+
+                <!-- 根据编辑属性集合缺省生成输入元素 -->
+                @Html.GetModalHtmlStringForCreateOrEditItemCollection(createOrEditItems, Model)
+                <textarea class="form-control" id="BodyContent" name="BodyContent" placeholder="请输入详细说明数据。" rows="10" style="display: none;">@Model.BodyContent</textarea>
+            </form>
+            <div class="form-group form-row" style="">
+                <div class="col-12 col-md-12 col-sm-12">
+                    <!-- 这里的方法在 appFunctionForCommon.js 中创建，提交成功的话，跳转至列表页，否则显示校验结果 -->
+                    <button type="button" class="btn btn-primary" onclick="submitCourseItemContentEditForm('@Model.CourseItemId')"><i class="fa fa-send"></i> 提交数据</button>
+                    <button type="reset" class="btn btn-success"><i class="fa fa-refresh"></i> 重置表单</button>
+                    @if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+                    {
+                        <span id="boVM_CreateOrEdit_Error" class="text-center text-danger " style='margin-left:20px; margin-top:7px'><b>@Model.ErrorMessage</b></span>
+                    }
+                </div>
+            </div>
+
+        }
+    </div>
+
+</div>

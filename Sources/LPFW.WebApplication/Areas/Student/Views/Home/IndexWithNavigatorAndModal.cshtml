@@ -1,0 +1,293 @@
+﻿<!--
+  普通的数据处理入口：
+   1. 使用分页的数据列表；
+   2. 应用局部页处理新建、编辑和明细数据的显示 UI；
+   3. 使用会话框处理删除数据的确认以及删除错误以后的体视；
+   4. 使用列表数据的分类导航组件
+-->
+@model LPFW.ViewModels.TeachingBusiness.CourseItemContentVM
+@using LPFW.HtmlHelper
+@{
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 获取 bootStrapTreeView 导航树节点数据的路径
+    var navigatorItemDataPath02 = controllerPath + "/RefreshTreeViewForCourseContentItem";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath + "/PaginateList";
+
+}
+
+<div class="row sm-gutters">
+    <div class="col-12 col-md-3 col-lg-3" id="navigatorPalceArea">
+        @await Html.PartialAsync("_NavigatorWithBootTreeView")
+    </div>
+    <!-- 主工作区，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+    <div class="col-12 col-md-9 col-lg-9" id="mainWorkPlaceArea">
+        @await Html.PartialAsync(@ViewData["EditPartialName"] as string, Model)
+    </div>
+</div>
+
+<!-- 一组用于留存查询、分页、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetListPageParameter(pageParameter)
+
+<!-- 新建、编辑、明细数据处理模态框 -->
+@await Html.PartialAsync("_DataOperationModal")
+
+<!-- 删除分页对象确认提交会话框 -->
+@await Html.PartialAsync("_PaginateCommonDeleteItemModal")
+@await Html.PartialAsync("_CourseItemDelete")
+
+<!-- 上传选择器会话框 -->
+@await Html.PartialAsync("_CommonBusinessFileCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessImageCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoCoverSelectorModal")
+@await Html.PartialAsync("_CommonAvatarSelectorModal")
+
+@section Scripts{
+    <script>
+
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 设置导航树节点
+            //appInitialBootStrapTreeViewForPagination("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea");
+            refreshTreeViewForCourseContentItem('@Model.CourseId');
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素。
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            // 刷新浏览器组件的高度
+            resetDivHeight();
+
+            // 以下几个调用是演示性质的，在实际应用中，如果需要处理的话，在这里自定义处理
+            //appInitialBootstrapMultiselect("DemoItemForMultiSelectId");
+            //appInitialSummernote("Content");
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+        /* 根据课程 Id ，跳转至缺省的课程单元内容编辑视图 */
+        function gotoDefaultCourseContentEdit(id) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: "/TeachingBusiness/Course/DefaultCourseContentEdit/" + id,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById("mainWorkPlaceArea").innerHTML = data;
+                resetDivHeight();
+
+                // 提取导航树名称
+                var courseName = $('#CourseName').val();
+                document.getElementById("navigatorTreeViewTitle").innerHTML = courseName;
+
+                // 刷新导航树为课程节点
+                refreshTreeViewForCourseContentItem(id);
+                appInitialSummernote("BodyContent");
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        /* 根据课程单元 Id ，跳转至指定的课程单元内容编辑视图 */
+        function gotoCourseContentEdit(id) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: "/Teacher/Home/CourseContentEdit/" + id,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById("mainWorkPlaceArea").innerHTML = data;
+                resetDivHeight();
+                appInitialSummernote("BodyContent");
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        /* 根据课程 Id ，刷新课程单元条目的导航组件 */
+        function refreshTreeViewForCourseContentItem(id) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: "/Teacher/Home/RefreshTreeViewForCourseContentItem/" + id,
+                beforeSend: function () {
+                }
+            }).done(function (dataReusult) {
+                $('#navigatorTreeView').treeview({
+                    levels: 2,
+                    expandIcon: 'fa fa-angle-down',
+                    collapseIcon: 'fa fa-angle-right',
+                    emptyIcon: 'fa',
+                    nodeIcon: 'fa fa-list',
+                    selectedIcon: 'fa fa-list-alt',
+                    showBorder: false,
+                    data: dataReusult,
+                    onNodeSelected: function (event, node) {
+                        // 提取类型 Id，跳转至编辑课程单元内容局部视图
+                        gotoCourseItemContentDetail(node.id);
+                    }
+                });
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        /* 新建或编辑课程单元条目 */
+        function gotoCreateOrEditCourseItem(id, courseId) {
+            $('#dataOperationModal').modal({
+                show: true,
+                backdrop: 'static'
+            });
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Teacher/Home/CreateOrEditCourseItem/' + id + "?courseId=" + courseId,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('dataOperationModalContent').innerHTML = data;
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        function submitEditForm(courseItemId){
+            var boVMCreateFormOptions = {
+                success: function (data) {
+                    document.getElementById("dataOperationModalContent").innerHTML = data;
+                    // 检查是否保存成功，保存成功的话跳转回到列表局部视图
+                    var isSaved = $('#IsSaved').val();
+                    var courseId = $('#CourseId').val();
+
+                    if (isSaved === "true") {
+                        $('#dataOperationModal').modal('hide');
+                        gotoCourseContentEdit(courseItemId);
+                        // 刷新导航树为课程节点
+                        refreshTreeViewForCourseContentItem(courseId);
+                    }
+                }
+            };
+            $('#boVM_CreateOrEdit').ajaxSubmit(boVMCreateFormOptions);
+        }
+
+        function closeEditFormModal(courseItemId)
+        {
+            $('#dataOperationModal').modal('hide');
+            gotoCourseContentEdit(courseItemId);
+        }
+
+        function submitCourseItemContentEditForm(itemId){
+            var boVMCreateFormOptions = {
+                success: function (data) {
+                    document.getElementById("mainWorkPlaceArea").innerHTML = data;
+                    var isSaved = $('#IsSaved').val();
+                    if (isSaved === "true") {
+                        gotoCourseItemContentDetail(itemId);
+                    }
+                }
+            };
+            $('#CourseItemContentVM_CreateOrEdit').ajaxSubmit(boVMCreateFormOptions);
+        }
+
+        function gotoCourseItemContentDetail(itemId) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Teacher/Home/CourseItemContentDetail/' + itemId,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById('mainWorkPlaceArea').innerHTML = data;
+                resetDivHeight();
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        function gotoCourseList(courseContainerId) {
+            appGotoTypePaginatePage(courseContainerId, '../../Teacher/Home/PaginateList', 'mainWorkPlaceArea');
+            appInitialBootStrapTreeViewForPagination("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea");
+            document.getElementById("navigatorTreeViewTitle").innerHTML = "课程类型";
+        }
+
+        function gotoDeleteCourseItem(itemId, itemName, courseId) {
+            $('#courseItemDeleteModal').modal({
+                show: true,
+                backdrop: 'static'
+            });
+            document.getElementById("deleteCourseItemModalMessage").innerHTML = '你即将删除的课程单元是：' + itemName+'，请你确认之后再执行！';
+            $('#courseItemID').val(itemId);
+            $('#courseId').val(courseId);
+            document.getElementById("deleteCourseItemModalErrMessage").innerText = '';
+        }
+
+        function deleteCourseItem() {
+            var itemId = $('#courseItemID').val();
+            var courseId = $('#courseId').val();
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: '/Teacher/Home/DeleteCourseItem/' + itemId,
+                beforeSend: function () {
+                }
+            }).done(function (delStatus) {
+                if (delStatus.deleteSatus === true) {
+                    $('#courseItemDeleteModal').modal('hide');
+                    refreshTreeViewForCourseContentItem(courseId);
+                    gotoDefaultCourseContentEdit(courseId);
+
+                } else {
+                    document.getElementById("deleteCourseItemModalErrMessage").innerText = delStatus.message;
+                }
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+    </script>
+}

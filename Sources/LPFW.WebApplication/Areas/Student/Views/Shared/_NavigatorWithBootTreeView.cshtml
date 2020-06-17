@@ -1,0 +1,18 @@
+﻿@{ 
+    var navigatorTreeViewTitle = "导航树标题";
+    if (ViewData["NavigatorTreeViewTitle"] != null)
+    {
+        navigatorTreeViewTitle = ViewData["NavigatorTreeViewTitle"] as string;
+    }
+}
+
+<div class="card card-dark">
+    <div class="card-header" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid;">
+        <div>
+            <h4 id="navigatorTreeViewTitle">@navigatorTreeViewTitle</h4>
+        </div>
+    </div>
+    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+         <div id="navigatorTreeView"></div>
+    </div>
+</div>

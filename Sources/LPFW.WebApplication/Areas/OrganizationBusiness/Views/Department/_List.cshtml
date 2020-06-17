@@ -1,0 +1,63 @@
+﻿<!--
+  部门数据列表    
+-->
+
+@model IEnumerable<LPFW.ViewModels.OrganizationBusiness.DepartmentVM>
+@using LPFW.HtmlHelper
+@{ 
+
+    var listItems = ViewData["ListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+
+    // 新建或者编辑对象的路径
+    var creatOrEditUrlString = controllerPath + "/CreateOrEditWithGroup/";
+    // 根据关键词检索列表数据的路径
+    var searchWithKeywordUrlString = controllerPath + "/List";
+    // 明细数据路径
+    var detailUrlString = controllerPath + "/Detail/";
+    // 删除数据路径
+    var deleteUrlString = controllerPath + "/Delete/";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath + "/List";
+
+}
+<div class="card card-dark">
+    <!-- 列表标题区 -->
+    @Html.CommonListByTypeWithModalCardHeader(ViewData["FunctionName"] as string, creatOrEditUrlString, searchWithKeywordUrlString,"dataOperationModal","dataOperationModalContent")
+    <div class="card-body" style="margin-top:-5px" id="listContainer">
+        <div class="table-responsive" style="margin-top:-10px">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        @Html.ListTableHeaderForListItems(listItems,defaultListUrlString,"mainWorkPlaceArea")
+                        @Html.ListTableHeader("数据操作",80)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="background-color:white;border-color:darkgray">
+                            <!-- 数据集合元素列表 -->
+                            @Html.ListTableDataForListItems(listItems,item)
+                            <!-- 配置维护-->
+                            @*<td style="background-color:white;border-color:darkgray" class="text-center">
+                                <a href="javascript:void(0)" onclick="gotoDepartmentConfig('@item.Id')">
+                                    <i class="fa fa-cogs" aria-hidden="true"></i>
+                                </a>
+                            </td>*@
+                            <!-- 数据操作 -->
+                            <td style="background-color:white;border-color:darkgray" class="text-center">
+                                <a href="javascript:void(0)" onclick="appGotoCreateOrEditByTypeWithModal('@item.Id','@creatOrEditUrlString','dataOperationModal','dataOperationModalContent')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="appGotoDetailPartialView('@item.Id','@detailUrlString','mainWorkPlaceArea')"><i class="fas fa-list-ul text-info"></i></a>
+                                @{ var deleteTip = "你所选择的数据：<b>" + item.Name + "</b> 将被删除，请你确认";}
+                                <a href="javascript:void(0)" onclick="appOpenDeleteItemModal('deleteItemModal', '@item.Id', '@deleteTip','@deleteUrlString','@defaultListUrlString','mainWorkPlaceArea')"><i class="fas fa-times text-warning"></i> </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+             </table>
+        </div>
+    </div>
+</div>

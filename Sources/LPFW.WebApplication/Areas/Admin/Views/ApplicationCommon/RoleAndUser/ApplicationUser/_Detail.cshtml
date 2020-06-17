@@ -1,0 +1,26 @@
+﻿@model LPFW.ViewModels.EntityViewModel
+@using LPFW.HtmlHelper
+@{ 
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+
+    // 退出返回到列表页的 url
+    var defaultListUrlString = "/" + areaPath + "/" + controllerPath + "/PaginateList";
+
+    // 获取编辑属性集合
+    var detailItems = ViewData["DetailItems"] as List<LPFW.ViewModels.ControlModels.DetailItem>;
+
+}
+
+<div class="card">
+
+    <!-- 视图模型明细数据标题区，生成的标题包含 退出 按钮，执行的方法 appGotoDefaultCommonPage 在  appFunctionForCommon.js 中创建，返回列表 -->
+    @Html.PaginateDetailHeader(ViewData["FunctionName"] as string, defaultListUrlString)
+    <div class="card-body" style="margin-top:5px">
+        <!-- 根据编辑属性集合缺省生成输入元素 -->
+        @Html.GetHtmlStringForDetailItems(detailItems,Model)
+    </div>
+
+</div>

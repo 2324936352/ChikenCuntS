@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Extensions\Station\**" />
+    <EmbeddedResource Remove="Extensions\Station\**" />
+    <None Remove="Extensions\Station\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LPFW.DataAccess\LPFW.DataAccess.csproj" />
+    <ProjectReference Include="..\LPFW.Entities\LPFW.EntitiyModels.csproj" />
+    <ProjectReference Include="..\LPFW.Foundation\LPFW.Foundation.csproj" />
+    <ProjectReference Include="..\LPFW.ORM\LPFW.ORM.csproj" />
+    <ProjectReference Include="..\LPFW.ViewModels\LPFW.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,5 @@
+﻿
+原始地址：https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/powershell
+应用说明：
+Add-Migration -Name "lpApp001" -Project "LPFW.ORM"  -StartupProject "LPFW.WebApplication"
+Update-Database -Migration "lpApp001"  -Project "LPFW.ORM"  -StartupProject "LPFW.WebApplication"

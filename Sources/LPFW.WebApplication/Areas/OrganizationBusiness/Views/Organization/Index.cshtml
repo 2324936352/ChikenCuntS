@@ -1,0 +1,76 @@
+﻿
+<!--
+  营运单位管理入口视图    
+-->
+
+@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{
+    var pageParameter = ViewData["ListSinglePageParameter"] as LPFW.DataAccess.Tools.ListSinglePageParameter;
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 获取 bootStrapTreeView 导航树节点数据的路径
+    var navigatorItemDataPath = controllerPath + "/DataForBootStrapTreeView";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath + "/List";
+
+}
+
+<div class="row">
+    <!-- 组织导航 -->
+    @*<div class="col-12 col-md-3 col-lg-3" id="navigatorPalceArea">
+        @await Html.PartialAsync("_NavigatorWithBootTreeView")
+    </div>*@
+
+    <!-- 单位列表 -->
+    <div class="col-12 col-md-12 col-lg-12" id="mainWorkPlaceArea">
+        @await Html.PartialAsync("../../Views/Organization/_CommonList",Model)
+    </div>
+</div>
+
+<!-- 一组用于留存查询、排序、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetLisSingletPageParameter(pageParameter)
+
+<!-- 删除对象确认提交会话框 -->
+@await Html.PartialAsync("_CommonDeleteItemModal")
+
+@section Scripts{
+    <script>
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 设置导航树节点
+            //appInitialBootStrapTreeViewForCommon("navigatorTreeView", "@navigatorItemDataPath", "@defaultListUrlString", "mainWorkPlaceArea");
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            resetDivHeight();
+            // 初始化地址选择器
+            _init_area();
+            _setAreaWithAddressVM();
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+    </script>
+}

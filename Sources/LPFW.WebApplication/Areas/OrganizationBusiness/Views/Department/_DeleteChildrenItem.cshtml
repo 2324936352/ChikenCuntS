@@ -1,0 +1,29 @@
+﻿<!--
+  删除下级部门基础数据
+-->
+
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+
+<section class="section">
+    <div class="section-body">
+        <div class="float-lg-right">
+            <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" onclick="gotoDepartmentConfigRoute('@Model.ParentId','ConfigChildren')"><i class="fas fa-times"></i> 取消删除 </a>
+        </div>
+        <span style="font-size:20px">确认删除 @Model.Name  </span>
+        <hr style="height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+        <div style="margin-top:30px">
+            <div class="alert alert-light alert-has-icon">
+                <div class="alert-icon"><i class="far fa-lightbulb"></i></div>
+                <div class="alert-body">
+                    <div class="alert-title">重要提示</div>
+                    你当前将要执行的是删除部门：<b>@Model.Name</b>，删除的数据将无法恢复，请你确认后再单击下面“提交删除” ，否则请“取消删除”！
+                </div>
+            </div>
+            <div class="alert alert-danger" id="deleteModalErrMessage"></div>
+
+            <hr style="height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+            <button type="button" class="btn btn-primary" onclick="submitDeleteChildrenItem('@Model.Id')"><i class="fa fa-send"></i> 提交删除 </button>
+
+        </div>
+    </div>
+</section>

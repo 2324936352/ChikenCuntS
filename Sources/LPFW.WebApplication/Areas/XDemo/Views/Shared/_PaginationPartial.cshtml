@@ -1,0 +1,61 @@
+﻿@{
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+
+    // 缺省的列表页路径
+    var defaultUrlString = controllerPath+"/PaginateList";
+}
+
+<nav class="pull-right" style="margin-top:-28px">
+    <ul class="pagination justify-content-end">
+        @if (pageGroup.PagenateGroupItem.FirstIndex == 1)
+        {
+            <li class="page-item disabled"><a class="page-link"  href="javascript:gotoPage('1')" aria-label="第一页"><i class="fas fa-fast-backward"></i></a></li>
+            <li class="page-item disabled"><a class="page-link"  href="#" aria-label="回退一组"><i class="fas fa-backward"></i></a></li>
+            if (pageGroup.PageIndex >= 2)
+            {
+                <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PageIndex-1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="前一页"><i class="fas fa-play fa-rotate-180"></i></a></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" href="#" aria-label="前一页"><i class="fas fa-play fa-rotate-180"></i></a></li>
+            }
+        }
+        else
+        {
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('1','@defaultUrlString','mainWorkPlaceArea')" aria-label="第一页">第 1 页 </a></li>
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PagenateGroupItem.FirstIndex-1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="回退一组"><i class="fas fa-fast-backward"></i></a></li>
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PageIndex-1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="前一页"><i class="fas fa-play fa-rotate-180"></i></a></li>
+        }
+        @for (int i = pageGroup.PagenateGroupItem.FirstIndex; i < pageGroup.PagenateGroupItem.LastIndex + 1; i++)
+        {
+            var activeString = "";
+            if (i == pageGroup.PageIndex)
+            {
+                activeString = "active";
+            }
+            <li class="@activeString "><a class="page-link" href="javascript:appGotoPaginatePage('@i','@defaultUrlString','mainWorkPlaceArea')">@i <span class="sr-only">(current)</span></a></li>
+        }
+        @if (pageGroup.PagenateGroupItem.LastIndex == pageGroup.PageAmount)
+        {
+            if (pageGroup.PageIndex < pageGroup.PageAmount)
+            {
+                <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PageIndex+1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="后一页"><i class="fas fa-play"></i> </a></li>
+            }
+            else
+            {
+                <li class="page-item disabled"><a class="page-link" href="#" aria-label="下一页"><i class="fas fa-play"></i></a></li>
+            }
+            <li class="page-item disabled"><a class="page-link" href="#" aria-label="向前一组"><i class="fas fa-forward"></i></a></li>
+            <li class="page-item disabled"><a class="page-link" href="#" aria-label="最后页"><i class="fas fa-fast-forward"></i></a></li>
+        }
+        else
+        {
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PageIndex+1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="后一页"><i class="fas fa-play"></i></a></li>
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@(pageGroup.PagenateGroupItem.LastIndex+1)','@defaultUrlString','mainWorkPlaceArea')" aria-label="向前一组"><i class="fas fa-forward"></i></a></li>
+            <li class="page-item"><a class="page-link" href="javascript:appGotoPaginatePage('@pageGroup.PageAmount','@defaultUrlString','mainWorkPlaceArea')" aria-label="最后一条"><i class="fas fa-fast-forward"></i></a></li>
+        }
+
+    </ul>
+</nav>

@@ -1,0 +1,31 @@
+﻿<!--
+  用于部门员工管理的单位部门导航树
+-->
+@model IEnumerable<LPFW.ViewModels.OrganizationBusiness.OrganizationSelectorVM>
+@{
+    var organizationId = ViewData["OrganizationId"] as string;
+    var organizationName = "单位名称";
+    var currentItem = Model.FirstOrDefault(x => x.OrganizationId==organizationId);
+    if (currentItem != null)
+    {
+        organizationName = currentItem.OrganizationName;
+    }
+}
+<div class="card card-dark">
+    <div class="card-header" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid;">
+        <div>
+            <h4>@organizationName</h4>
+        </div>
+        <div class='card-header-form'>
+        </div>
+    </div>
+    <!-- 指定单位之下的部门导航树 -->
+    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+        <div id="navigatorTreeView"></div>
+    </div>
+</div>
+
+<!-- 当前的选中的单位 Id -->
+<input type="hidden" id="groupId" name="groupId" value="@ViewData["OrganizationId"]" />
+<!-- 当前的选中的部门 Id -->
+<input type="hidden" id="defaultTypeID" name="defaultTypeID" value="@ViewData["DepartamentId"]" />

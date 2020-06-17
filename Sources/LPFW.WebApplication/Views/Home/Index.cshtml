@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "柳州在线教学服务平台";
+
+    var publicLinkCollection = ViewData["PublicLinkCollection"] as List<PublicLinkItemVM>;
+    var sprintItemCollection = ViewData["SprintItemCollection"] as List<SprintItem>;
+
+}
+
+<div class="row" style="margin-top:25px">
+    @foreach (var item in publicLinkCollection)
+    {
+        <div class="col-md-3">
+            <div class="card card-hero">
+                <div class="card-header">
+                    <h5>@item.Title</h5>
+                    <div class="card-description" style="font-size:13px;height:60px">@item.Description</div>
+                </div>
+                <div class="card-body p-0">
+                    <div class="tickets-list">
+                        <a href="@item.Url" class="ticket-item ticket-more">
+                            查看 <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

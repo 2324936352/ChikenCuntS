@@ -1,0 +1,24 @@
+﻿<!-- 用于处理删除提醒以及返回删除错误信息的模态对话框 -->
+<div class="modal fade" id="deleteItemModal" tabindex="-1" role="dialog" aria-labelledby="deleteItemModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLongTitle">删除数据</h3>
+            </div>
+            <div class="modal-body" id="" style="color:red">
+                <p id="deleteModalMessage" style="color:red"></p>                            <!--这是一个空的文字段落标签，用于显示所需要的提示信息-->
+                <p id="deleteModalErrMessage" style="color:red"></p>                         <!--这是一个空的文字段落标签，用于显示数据删除操作是否成功-->
+                <input type="hidden" name="businessObjectID" id="businessObjectID" />        <!--这是一个隐藏的数据标签，用于转移待删除对象的ID-->
+                <input type="hidden" name="controllerName" id="controllerName" />            <!--这是一个隐藏的数据标签，用于转移待删除对象的控制器名称-->
+                <input type="hidden" name="deleteUrlString" id="deleteUrlString" />          <!--这是一个隐藏的数据标签，用于转移待删除对象的提交的路径-->
+                <input type="hidden" name="defaultUrlString" id="defaultUrlString" />        <!--这是一个隐藏的数据标签，用于转移待删除对象成功后返回的路径-->
+                <input type="hidden" name="mainWorkPlaceAreaId" id="mainWorkPlaceAreaId" />  <!--这是一个隐藏的数据标签，用于转移显示返回数据 UI 的 div 标识-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger" onclick="appGotoDeletePaginateBo()">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,20 @@
+﻿<div class="modal fade" id="courseItemDeleteModal" tabindex="-1" role="dialog" aria-labelledby="courseItemDeleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-danger" id="exampleModalLongTitle">删除数据</h4>
+            </div>
+            <div class="modal-body" id="" style="color:red">
+                <p id="deleteCourseItemModalMessage"></p>
+                <p id="deleteCourseItemModalErrMessage" style="color:red"></p>
+                <input type="hidden" name="courseItemID" id="courseItemID" />
+                <input type="hidden" name="courseId" id="courseId" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-danger" onclick="deleteCourseItem()">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+

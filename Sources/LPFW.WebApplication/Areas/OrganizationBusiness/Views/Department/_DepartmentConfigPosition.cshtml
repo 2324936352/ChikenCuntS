@@ -1,0 +1,41 @@
+﻿<!--
+  部门工作岗位信息配置管理
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@using LPFW.HtmlHelper
+@{
+    var positionItemCollection = ViewData["PositionItemCollection"] as List<LPFW.ViewModels.OrganizationBusiness.PositionVM>;
+    var tablelistItemCollection = ViewData["PositionListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="float-lg-right">
+            <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" onclick="createOrPositionItem('@Guid.NewGuid()','@Model.Id')"><i class="fa fa-plus"></i> 添加部门岗位 </a>
+        </div>
+        <span style="font-size:20px">部门工作岗位信息</span>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+        <div class="table-responsive" style="">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr style="height:45px;background-color:whitesmoke">
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection, "", "")
+                        @Html.ListTableHeader("维护", 50)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in positionItemCollection)
+                    {
+                        <tr style="background-color:white;border-color:darkgray">
+                            @Html.ListTableDataForListItems(tablelistItemCollection, item)
+                            <td style="background-color:white;border-color:darkgray" class="text-center">
+                                <a href="javascript:void(0)" onclick="createOrPositionItem('@item.Id','@Model.Id')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="deletePositionItem('@item.Id','@Model.Id')"><i class="fas fa-times text-warning"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

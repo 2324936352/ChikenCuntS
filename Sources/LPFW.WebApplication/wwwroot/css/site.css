@@ -1,0 +1,135 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#phone {
+    width: 320px;
+    height: 600px;
+    background: #000;
+    margin: 100px auto;
+}
+
+.top {
+    width: 320px;
+    height: 23px;
+    background: url("images/1.png")
+}
+
+.tittle {
+    width: 320px;
+    height: 30px;
+    background: url("images/2.png");
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+}
+
+.singer {
+    width: 320px;
+    height: 20px;
+    margin-top: 5px;
+    line-height: 20px;
+    font-size: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.play {
+    width: 190px;
+    height: 190px;
+    background: url("images/3.png");
+    border-radius: 50%;
+    margin: 20px auto;
+}
+
+.lrc {
+    width: 300px;
+    height: 280px;
+    margin: 0px auto;
+    color: #ccc;
+    text-align: center;
+    overflow: hidden;
+}
+
+    .lrc p {
+        line-height: 20px;
+    }
+
+#content {
+    position: relative;
+    top: 0px;
+}
+
+.rotate {
+    animation: rot 5s linear infinite;
+}
+/*动画效果*/
+@keyframes rot {
+    from {
+        transform: rotate(0deg)
+    }
+
+    to {
+        transform: rotate(360deg)
+    }
+}

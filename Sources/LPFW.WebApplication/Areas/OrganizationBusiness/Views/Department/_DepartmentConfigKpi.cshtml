@@ -1,0 +1,42 @@
+﻿<!--
+  部门绩效指标配置管理
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@using LPFW.HtmlHelper
+@{
+    var kpiItemCollection = ViewData["KpiItemCollection"] as List<LPFW.ViewModels.OrganizationBusiness.DepartmentKPIVM>;
+    var tablelistItemCollection = ViewData["KpiListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="float-lg-right">
+            <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" onclick="createOrEditKpiItem('@Guid.NewGuid()','@Model.Id')"><i class="fa fa-plus"></i> 添加部门指标 </a>
+        </div>
+        <span style="font-size:20px">部门绩效指标</span>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+        <div class="table-responsive" style="">
+            <table class="table table-bordered table-striped table-sm" style="">
+                <thead>
+                    <tr style="height:45px;background-color:whitesmoke">
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection, "", "")
+                        @Html.ListTableHeader("维护", 50)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in kpiItemCollection)
+                    {
+                        <tr style="height:30px;background-color:white;border-color:darkgray">
+                            @Html.ListTableDataForListItems(tablelistItemCollection, item)
+                            <td style="background-color:white;border-color:darkgray" class="text-center">
+                                <a href="javascript:void(0)" onclick="createOrEditKpiItem('@item.Id','@Model.Id')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteKpiItem('@item.Id','@Model.Id')"><i class="fas fa-times text-warning"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

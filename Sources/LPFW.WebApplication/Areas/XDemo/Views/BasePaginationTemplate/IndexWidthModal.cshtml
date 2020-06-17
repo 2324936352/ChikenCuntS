@@ -1,0 +1,67 @@
+﻿@model IEnumerable<LPFW.ViewModels.Demo.DemoEntityVM>
+@using LPFW.HtmlHelper
+@{
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+    var entityController = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12" id="mainWorkPlaceArea">
+        <!-- 一般在 id="mainWorkPlaceArea" 的区域里，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+        <partial name="_PaginationCommonListWithModal" model="@Model" />
+    </div>
+</div>
+
+<!-- 一组用于留存查询、分页、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetListPageParameter(pageParameter)
+
+<!-- 新建、编辑、明细数据处理模态框 -->
+<partial name="_DataOperationModal" />
+
+<!-- 删除分页对象确认提交会话框 -->
+<partial name="_PaginateCommonDeleteItemModal" />
+
+<!-- 上传选择器会话框 -->
+<partial name="_CommonBusinessFileCollectionSelectorModal" />
+<partial name="_CommonBusinessImageCollectionSelectorModal" />
+<partial name="_CommonBusinessVideoSelectorModal" />
+<partial name="_CommonBusinessVideoCoverSelectorModal" />
+<partial name="_CommonAvatarSelectorModal" />
+
+
+@section Scripts{
+    <script>
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            resetDivHeight();
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+    </script>
+}

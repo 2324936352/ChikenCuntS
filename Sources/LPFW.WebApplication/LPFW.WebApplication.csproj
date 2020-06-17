@@ -1,0 +1,442 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <UserSecretsId>33a45093-fe73-4a01-b63f-fe8ba067a481</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\Admin\Models\**" />
+    <Compile Remove="Areas\Admin\ViewComponents\**" />
+    <Compile Remove="Areas\Music\Views\Album\**" />
+    <Compile Remove="Areas\Music\Views\Music\**" />
+    <Content Remove="Areas\Admin\Models\**" />
+    <Content Remove="Areas\Admin\ViewComponents\**" />
+    <Content Remove="Areas\Music\Views\Album\**" />
+    <Content Remove="Areas\Music\Views\Music\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\ViewComponents\**" />
+    <EmbeddedResource Remove="Areas\Music\Views\Album\**" />
+    <EmbeddedResource Remove="Areas\Music\Views\Music\**" />
+    <None Remove="Areas\Admin\Models\**" />
+    <None Remove="Areas\Admin\ViewComponents\**" />
+    <None Remove="Areas\Music\Views\Album\**" />
+    <None Remove="Areas\Music\Views\Music\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.9.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.DynamicLinq" Version="1.0.19" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+    <PackageReference Include="Serilog.Settings.AppSettings" Version="2.2.2" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.1.3" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\MusicUI\Views\Admin\" />
+    <Folder Include="Areas\MusicUI\Views\Account\" />
+    <Folder Include="Views\Common\" />
+    <Folder Include="wwwroot\lib\jsTree\" />
+    <Folder Include="wwwroot\uploadFiles\images\" />
+    <Folder Include="wwwroot\uploadFiles\avatars\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\css\bootstrap-datepicker.css.map" />
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\css\bootstrap-datepicker.standalone.css.map" />
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\js\bootstrap-datepicker.js" />
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\js\bootstrap-datepicker.min.js" />
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\js\bootstrap-datepicker.zh-CN.min.js" />
+    <None Include="wwwroot\lib\bootstrap-datetimepicker\js\bootstrap-datetimepicker.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\fileinput.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\fileinput.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ar.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\az.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\bg.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ca.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\cr.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\cs.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\da.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\de.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\el.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\es.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\et.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\fa.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\fi.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\fr.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\gl.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\he.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\hu.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\id.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\it.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ja.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ka.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\kr.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\kz.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\LANG.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\lt.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\nl.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\no.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\pl.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\pt-BR.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\pt.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ro.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\ru.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\sk.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\sl.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\sv.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\th.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\tr.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\uk.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\uz.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\vi.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\zh-TW.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\locales\zh.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\piexif.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\piexif.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\purify.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\purify.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\sortable.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\js\plugins\sortable.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer-fas\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer-fas\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer-fa\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer-fa\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\explorer\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\fas\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\fas\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\fa\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\fa\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\gly\theme.js" />
+    <None Include="wwwroot\lib\bootstrap-fileinput\themes\gly\theme.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\font\roboto\Roboto-Bold.woff2" />
+    <None Include="wwwroot\lib\bootstrap-material-design\font\roboto\Roboto-Light.woff2" />
+    <None Include="wwwroot\lib\bootstrap-material-design\font\roboto\Roboto-Medium.woff2" />
+    <None Include="wwwroot\lib\bootstrap-material-design\font\roboto\Roboto-Regular.woff2" />
+    <None Include="wwwroot\lib\bootstrap-material-design\font\roboto\Roboto-Thin.woff2" />
+    <None Include="wwwroot\lib\bootstrap-material-design\img\lightbox\default-skin.svg" />
+    <None Include="wwwroot\lib\bootstrap-material-design\img\svg\arrow_left.svg" />
+    <None Include="wwwroot\lib\bootstrap-material-design\img\svg\arrow_right.svg" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\datatables-select.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\datatables-select.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\datatables.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\datatables.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\imagesloaded.pkgd.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\jquery.zmd.hierarchical-display.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\jquery.zmd.hierarchical-display.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\masonry.pkgd.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\progressBar.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\progressBar.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\rating.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\addons\rating.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\jquery-3.4.1.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\mdb.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\mdb.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\bs-custom-file-input.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\chart.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\default-file-input.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\enhanced-modals.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\forms-free.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\jquery.easing.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\scrolling-navbar.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\treeview.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\velocity.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\velocity.min.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\waves.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\modules\wow.js" />
+    <None Include="wwwroot\lib\bootstrap-material-design\js\popper.min.js" />
+    <None Include="wwwroot\lib\bootstrap-multiselect\js\bootstrap-multiselect.js" />
+    <None Include="wwwroot\lib\bootstrap-multiselect\less\bootstrap-multiselect.less" />
+    <None Include="wwwroot\lib\bootstrap-treeview\bootstrap-treeview.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ar-AR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ar-AR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-bg-BG.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-bg-BG.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ca-ES.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ca-ES.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-cs-CZ.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-cs-CZ.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-da-DK.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-da-DK.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-de-DE.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-de-DE.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-el-GR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-el-GR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-es-ES.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-es-ES.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-es-EU.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-es-EU.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fa-IR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fa-IR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fi-FI.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fi-FI.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fr-FR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-fr-FR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-gl-ES.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-gl-ES.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-he-IL.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-he-IL.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-hr-HR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-hr-HR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-hu-HU.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-hu-HU.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-id-ID.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-id-ID.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-it-IT.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-it-IT.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ja-JP.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ja-JP.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ko-KR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ko-KR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-lt-LT.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-lt-LT.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-lt-LV.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-lt-LV.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-mn-MN.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-mn-MN.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-nb-NO.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-nb-NO.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-nl-NL.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-nl-NL.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pl-PL.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pl-PL.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pt-BR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pt-BR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pt-PT.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-pt-PT.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ro-RO.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ro-RO.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ru-RU.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ru-RU.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sk-SK.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sk-SK.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sl-SI.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sl-SI.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sr-RS-Latin.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sr-RS-Latin.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sr-RS.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sr-RS.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sv-SE.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-sv-SE.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ta-IN.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-ta-IN.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-th-TH.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-th-TH.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-tr-TR.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-tr-TR.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-uk-UA.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-uk-UA.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-vi-VN.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-vi-VN.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-zh-CN.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-zh-CN.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-zh-TW.js" />
+    <None Include="wwwroot\lib\summernote\dist\lang\summernote-zh-TW.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\summernote-bs4.js" />
+    <None Include="wwwroot\lib\summernote\dist\summernote-bs4.js.map" />
+    <None Include="wwwroot\lib\summernote\dist\summernote-bs4.min.js" />
+    <None Include="wwwroot\lib\summernote\dist\summernote-lite.js" />
+    <None Include="wwwroot\lib\summernote\dist\summernote-lite.js.map" />
+    <None Include="wwwroot\lib\summernote\dist\summernote.js" />
+    <None Include="wwwroot\lib\summernote\dist\summernote.js.map" />
+    <None Include="wwwroot\lib\summernote\dist\summernote.min.js" />
+    <None Include="wwwroot\lib\videoJS\css\components\menu\_menu-inline.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\menu\_menu-popup.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\menu\_menu.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_adaptive.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_audio.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_big-play.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_button.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_captions-settings.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_captions.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_chapters.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_close-button.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_control-bar.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_control-spacer.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_control.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_descriptions.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_error.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_fullscreen.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_layout.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_live.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_loading.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_modal-dialog.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_picture-in-picture.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_play-pause.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_playback-rate.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_poster.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_progress.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_slider.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_subs-caps.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_subtitles.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_text-track.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_time.scss" />
+    <None Include="wwwroot\lib\videoJS\css\components\_volume.scss" />
+    <None Include="wwwroot\lib\videoJS\css\utilities\_linear-gradient.scss" />
+    <None Include="wwwroot\lib\videoJS\css\video-js.scss" />
+    <None Include="wwwroot\lib\videoJS\css\vjs-cdn.scss" />
+    <None Include="wwwroot\lib\videoJS\css\vjs.scss" />
+    <None Include="wwwroot\lib\videoJS\css\_print.scss" />
+    <None Include="wwwroot\lib\videoJS\css\_private-variables.scss" />
+    <None Include="wwwroot\lib\videoJS\css\_utilities.scss" />
+    <None Include="wwwroot\lib\videoJS\css\_variables.scss" />
+    <None Include="wwwroot\lib\videoJS\js\big-play-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\button.js" />
+    <None Include="wwwroot\lib\videoJS\js\clickable-component.js" />
+    <None Include="wwwroot\lib\videoJS\js\close-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\component.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\audio-track-controls\audio-track-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\audio-track-controls\audio-track-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\control-bar.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\fullscreen-toggle.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\live-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\mute-toggle.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\picture-in-picture-toggle.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\play-toggle.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\playback-rate-menu\playback-rate-menu-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\playback-rate-menu\playback-rate-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\load-progress-bar.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\mouse-time-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\play-progress-bar.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\progress-control.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\seek-bar.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\progress-control\time-tooltip.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\seek-to-live.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\spacer-controls\custom-control-spacer.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\spacer-controls\spacer.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\caption-settings-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\captions-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\chapters-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\chapters-track-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\descriptions-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\off-text-track-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\subs-caps-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\subs-caps-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\subtitles-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\text-track-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\text-track-controls\text-track-menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\time-controls\current-time-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\time-controls\duration-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\time-controls\remaining-time-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\time-controls\time-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\time-controls\time-divider.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\track-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-control\check-mute-support.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-control\check-volume-support.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-control\volume-bar.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-control\volume-control.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-control\volume-level.js" />
+    <None Include="wwwroot\lib\videoJS\js\control-bar\volume-panel.js" />
+    <None Include="wwwroot\lib\videoJS\js\error-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\event-target.js" />
+    <None Include="wwwroot\lib\videoJS\js\extend.js" />
+    <None Include="wwwroot\lib\videoJS\js\fullscreen-api.js" />
+    <None Include="wwwroot\lib\videoJS\js\index.js" />
+    <None Include="wwwroot\lib\videoJS\js\live-tracker.js" />
+    <None Include="wwwroot\lib\videoJS\js\loading-spinner.js" />
+    <None Include="wwwroot\lib\videoJS\js\media-error.js" />
+    <None Include="wwwroot\lib\videoJS\js\menu\menu-button.js" />
+    <None Include="wwwroot\lib\videoJS\js\menu\menu-item.js" />
+    <None Include="wwwroot\lib\videoJS\js\menu\menu-keys.js" />
+    <None Include="wwwroot\lib\videoJS\js\menu\menu.js" />
+    <None Include="wwwroot\lib\videoJS\js\mixins\evented.js" />
+    <None Include="wwwroot\lib\videoJS\js\mixins\stateful.js" />
+    <None Include="wwwroot\lib\videoJS\js\modal-dialog.js" />
+    <None Include="wwwroot\lib\videoJS\js\player.js" />
+    <None Include="wwwroot\lib\videoJS\js\plugin.js" />
+    <None Include="wwwroot\lib\videoJS\js\poster-image.js" />
+    <None Include="wwwroot\lib\videoJS\js\resize-manager.js" />
+    <None Include="wwwroot\lib\videoJS\js\setup.js" />
+    <None Include="wwwroot\lib\videoJS\js\slider\slider.js" />
+    <None Include="wwwroot\lib\videoJS\js\tech\html5.js" />
+    <None Include="wwwroot\lib\videoJS\js\tech\loader.js" />
+    <None Include="wwwroot\lib\videoJS\js\tech\middleware.js" />
+    <None Include="wwwroot\lib\videoJS\js\tech\setup-sourceset.js" />
+    <None Include="wwwroot\lib\videoJS\js\tech\tech.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\audio-track-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\audio-track.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\html-track-element-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\html-track-element.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track-cue-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track-display.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track-list-converter.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track-settings.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\text-track.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\track-enums.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\track-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\track-types.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\track.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\video-track-list.js" />
+    <None Include="wwwroot\lib\videoJS\js\tracks\video-track.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\browser.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\buffer.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\clamp.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\computed-style.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\create-logger.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\define-lazy-property.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\dom-data.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\dom.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\events.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\filter-source.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\fn.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\format-time.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\guid.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\log.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\median.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\merge-options.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\mimetypes.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\obj.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\promise.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\string-cases.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\stylesheet.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\time-ranges.js" />
+    <None Include="wwwroot\lib\videoJS\js\utils\url.js" />
+    <None Include="wwwroot\lib\videoJS\js\video.js" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\LPFW.DataAccess\LPFW.DataAccess.csproj" />
+    <ProjectReference Include="..\LPFW.Entities\LPFW.EntitiyModels.csproj" />
+    <ProjectReference Include="..\LPFW.Foundation\LPFW.Foundation.csproj" />
+    <ProjectReference Include="..\LPFW.HtmlHelper\LPFW.HtmlHelper.csproj" />
+    <ProjectReference Include="..\LPFW.ModelServices\LPFW.ViewModelServices.csproj" />
+    <ProjectReference Include="..\LPFW.ORM\LPFW.ORM.csproj" />
+    <ProjectReference Include="..\LPFW.ViewModels\LPFW.ViewModels.csproj" />
+  </ItemGroup>
+
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

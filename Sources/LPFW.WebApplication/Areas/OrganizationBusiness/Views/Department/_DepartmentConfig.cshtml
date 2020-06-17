@@ -1,0 +1,42 @@
+﻿<!--
+  部门基础信息配置管理
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@using LPFW.HtmlHelper
+@{
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+
+    // 退出返回到列表页的 url
+    var defaultListUrlString = "/" + areaPath + "/" + controllerPath + "/List";
+}
+
+<div class="card">
+    <div class="card-header" style="border-bottom-style:dotted;border-bottom-color:lightgray;border-bottom-width:1px">
+        <h4 style="font-size:22px;font-weight:normal;color:dimgray"><i class="fa fa-cog" aria-hidden="true"></i> @Model.Name </h4>
+        <div class="card-header-form">
+            <button class="btn btn-outline-danger" onclick="appGotoDefaultCommonPage('@defaultListUrlString','mainWorkPlaceArea')"><i class="fas fa-times"></i> 退出 </button>
+        </div>
+    </div>
+    <div class="card-body" style="overflow-y:auto" id="">
+        <div class="row">
+            <div class="col-2">
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item active" data-toggle="list" href="javascript:void(0)" role="tab" onclick="gotoDepartmentConfigRoute('@Model.Id','ConfigDetail')">基础信息</a>
+                    <a class="list-group-item" data-toggle="list" href="javascript:void(0)" role="tab" onclick="gotoDepartmentConfigRoute('@Model.Id','ConfigChildren')">下级机构</a>
+                    <a class="list-group-item" data-toggle="list" href="javascript:void(0)" role="tab" onclick="gotoDepartmentConfigRoute('@Model.Id','ConfigEmployee')">部门人员</a>
+                    <a class="list-group-item" data-toggle="list" href="javascript:void(0)" role="tab" onclick="gotoDepartmentConfigRoute('@Model.Id','ConfigPosition')">部门岗位</a>
+                    <a class="list-group-item" data-toggle="list" href="javascript:void(0)" role="tab" onclick="gotoDepartmentConfigRoute('@Model.Id','ConfigKpi')">绩效指标</a>
+                </div>
+            </div>
+            <div class="col-10" id="departmentConfigArea">
+                <!-- 将上面的导航处理结果在这个区域里呈现，缺省加载 _ConfigDetail -->
+                <partial name="../../Views/TransactionBusiness/Department/_DepartmentConfigDetail" model="@Model"]" />
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="padding:0px; padding-bottom:5px;padding-top:8px;height:50px;border-top-style:dotted;border-top-color:lightgray;border-top-width:1px">
+    </div>
+</div>

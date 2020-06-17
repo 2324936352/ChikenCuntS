@@ -1,0 +1,27 @@
+﻿
+<!-- 头像上传图片 Modal -->
+
+@{
+    var refreshUpLoadDataPath = "/Upload/DataForUploadVideoCover/";
+}
+
+<div class="modal fade" id="commonBusinessVideoCoverSelectorModal" tabindex="-1" role="dialog" aria-labelledby="commonBusinessVideoCoverSelectorModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:whitesmoke">
+                <h5 class="modal-title">请选择头像图片文件</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="" style="color:red">
+                <input type="file" class="form-control col-md-7 col-xs-12" id="commonBusinessVideoCoverSelector" name="commonBusinessVideoCoverSelector" placeholder="" value="" required data-preview-file-type="text">
+                <input type="hidden" name="relBusinessVideoCoverObjectID" id="relBusinessVideoCoverObjectID" />      <!--这是一个隐藏的数据标签，用于转移待图片关联对象的ID-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="appCloseCommonBusinessVideoCoverSelectorModal('@refreshUpLoadDataPath')">关闭并刷新数据</button>
+            </div>
+        </div>
+    </div>
+</div>
+

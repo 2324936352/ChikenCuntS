@@ -1,0 +1,173 @@
+﻿<!--
+  部门工作岗位作业配置 数据处理入口：
+-->
+@model IEnumerable<LPFW.ViewModels.OrganizationBusiness.PositionWorkListVM>
+@using LPFW.HtmlHelper
+@{
+    // 单位清单
+    var organizationSelectorCollection = ViewData["OrganizationCollection"] as List<LPFW.ViewModels.OrganizationBusiness.OrganizationSelectorVM>;
+    
+    // 缺省单位 Id
+    var defaultOrganizationId = "";
+    var defdefaultOrganizationItem = organizationSelectorCollection.FirstOrDefault(x => x.IsCurrent == true);
+    if (defdefaultOrganizationItem != null)
+    {
+        defaultOrganizationId = defdefaultOrganizationItem.OrganizationId;
+    }
+
+    // 提取页面规格参数
+    var pageParameter = ViewData["ListSinglePageParameter"] as LPFW.DataAccess.Tools.ListSinglePageParameter;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+    // 获取 jsTree 导航树节点数据的路径
+    var navigatorItemDataPath01 = controllerPath + "/DataForJsTree";
+    // 获取 bootStrapTreeView 导航树节点数据的路径
+    var navigatorItemDataPath02 = controllerPath + "/DataByGourpForBootStrapTreeView";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath + "/List";
+
+}
+
+@if (organizationSelectorCollection.Count == 0)
+{
+    <div class="alert alert-danger">
+        尚未配置任何与岗位管理所依赖的部门数据，无法进行岗位作业数据配置！
+    </div>
+}
+else
+{
+    <div class="row sm-gutters">
+        <div class="col-12 col-md-3 col-lg-3" id="navigatorPalceArea">
+            @await Html.PartialAsync("../../Views/TransactionBusiness/PositionWork/_NavigatorWithBootTreeView",organizationSelectorCollection)
+        </div>
+        <!-- 主工作区，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+        <div class="col-12 col-md-9 col-lg-9" id="mainWorkPlaceArea">
+            @await Html.PartialAsync("../../Views/TransactionBusiness/PositionWork/_PositionWokList",Model)
+        </div>
+    </div>
+}
+
+<!-- 一组用于留存查询、排序、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetLisSingletPageParameter(pageParameter)
+
+<!-- 新建、编辑、明细数据处理模态框 -->
+@await Html.PartialAsync("_DataOperationModal")
+
+<!-- 删除对象确认提交会话框 -->
+@await Html.PartialAsync("_CommonDeleteItemModal")
+
+
+@section Scripts{
+    <script>
+
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 设置导航树节点
+            var oId = "@defaultOrganizationId";
+            if (oId !== "")
+            {
+                initialDepartmentTreeView("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea", oId);
+            }
+
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素。
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            // 刷新浏览器组件的高度
+            resetDivHeight();
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+        /**
+         * 初始化部门导函数，页面加载时调用
+         * divId
+         * dataUrl：导航树节点数据服务接口地址
+         * defaultString
+         * mainWorkPlaceAreaId
+         * typeId：所有部门所归属的单位 Id
+         */
+        function initialDepartmentTreeView(divId, dataUrl, defaultString, mainWorkPlaceAreaId,typeId) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: dataUrl+"/"+typeId,
+                beforeSend: function () {
+                }
+            }).done(function (dataReusult) {
+                $('#'+divId).treeview({
+                    levels: 2,
+                    expandIcon: 'fa fa-angle-down',
+                    collapseIcon: 'fa fa-angle-right',
+                    emptyIcon: 'fa',
+                    nodeIcon: 'fa fa-list',
+                    selectedIcon: 'fa fa-list-alt',
+                    showBorder: false,
+                    data: dataReusult,
+                    onNodeSelected: function (event, node) {
+                        // 提取类型 Id，跳转至列表局部视图
+                        appGotoCommonTypePage(node.id, defaultString, mainWorkPlaceAreaId);
+                    }
+                });
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+        /**
+         * 根据选择的单位刷新部门导航树，以及岗位列表
+         * groupId：单位 Id
+         */
+        function gotoSelectTreeView(groupId) {
+            $.ajax({
+                cache: false,
+                type: 'get',
+                async: true,
+                url: "/TransactionCenter/PositionWork/SelectTreeView/" + groupId,
+                beforeSend: function () {
+                }
+            }).done(function (data) {
+                // 渲染局部页
+                document.getElementById("navigatorPalceArea").innerHTML = data;
+
+                // 提取当前单位 Id，刷新部门导航树
+                var groupId = $('#groupId').val();
+                initialDepartmentTreeView("navigatorTreeView", "@navigatorItemDataPath02", "@defaultListUrlString", "mainWorkPlaceArea", groupId);
+
+                // 提取当前缺省的部门 Id，刷新岗位列表数据
+                var defaultTypeID = $('#defaultTypeID').val();
+                appGotoCommonTypePage(defaultTypeID, "@defaultListUrlString", "mainWorkPlaceArea");
+
+                resetDivHeight();
+
+            }).fail(function () {
+                alert("连接后台失败！");
+            }).always(function () {
+            });
+        }
+
+    </script>
+}

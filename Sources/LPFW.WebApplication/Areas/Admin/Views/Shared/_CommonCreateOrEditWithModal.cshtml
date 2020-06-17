@@ -1,0 +1,58 @@
+﻿@model LPFW.ViewModels.EntityViewModel
+@using LPFW.HtmlHelper
+@{ 
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+    var formAction = "/" + areaPath + "/" + controllerPath + "/" + actionPath;
+
+    // 处理是否是新建对象的标签数据
+    var isNewString = "true";
+    if (!Model.IsNew)
+    {
+        isNewString = "false";
+    }
+
+    // 处理是否保存成功的数据标签对象
+    var IsSavedString = "false";
+    if (Model.IsSaved)
+    {
+        IsSavedString = "true";
+    }
+
+    // 退出返回到列表页的 url
+    var defaultListUrlString = "/" + areaPath + "/" + controllerPath + "/List";
+
+    // 获取编辑属性集合
+    var createOrEditItems = ViewData["CreateOrEditItems"] as List<LPFW.ViewModels.ControlModels.CreateOrEditItem>;
+}
+
+<div class="card">
+    <!-- 视图模型表单标题区，生成的标题包含 退出 按钮，执行的方法 appGotoDefaultCommonPage 在  appFunctionForCommon.js 中创建，返回列表 -->
+    @Html.CommonCreateOrEditWithModalCardHeader(ViewData["FunctionName"] as string, defaultListUrlString,"dataOperationModal")
+    <div class="card-body" style="margin-top:5px" id="createOrEditContainer">
+        <!-- 视图模型数据编辑表单 -->
+        <form id="boVM_CreateOrEdit" action="@formAction" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+
+            <!-- 隐藏的元素 -->
+            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+            <input type="hidden" id="IsNew" name="IsNew" value="@isNewString" />
+            <input type="hidden" id="IsSaved" name="IsSaved" value="@IsSavedString" />
+
+            @Html.GetModalHtmlStringForCreateOrEditItemCollection(createOrEditItems,Model)
+
+            <div class="form-group form-row">
+                <div class="col-12 col-md-12 col-sm-12">
+                    <!-- 这里的方法在 appFunctionForCommon.js 中创建，提交成功的话，跳转至列表页，否则显示校验结果 -->
+                    <a class="btn btn-outline-info " onclick="appCommonSubmitCreateOrEditFormForModal('boVM_CreateOrEdit','@defaultListUrlString','mainWorkPlaceArea','dataOperationModal','dataOperationModalContent')"><i class="fa fa-send"></i> 提交数据</a>
+                    <a class="btn btn-outline-info"><i class="fa fa-refresh"></i> 重置表单</a>
+                    @if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+                    {
+                        <span id="boVM_CreateOrEdit_Error" class="text-center text-danger " style='margin-left:20px; margin-top:7px'><b>@Model.ErrorMessage</b></span>
+                    }
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

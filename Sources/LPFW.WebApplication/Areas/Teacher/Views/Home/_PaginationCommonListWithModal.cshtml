@@ -1,0 +1,88 @@
+﻿@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{
+    var tablelistItemCollection = ViewData["ListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+    var entityController = ViewContext.RouteData.Values["controller"].ToString();
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+
+
+    // 新建或者编辑对象的路径
+    var creatOrEditUrlString = controllerPath + "/CreateOrEdit/";
+    // 根据关键词检索列表数据的路径
+    var searchWithKeywordUrlString = controllerPath+"/PaginateList";
+    // 明细数据路径
+    var detailUrlString = controllerPath+"/Detail/";
+    // 删除数据路径
+    var deleteUrlString = controllerPath+"/Delete/";
+    // 缺省的列表页路径
+    var defaultListUrlString = controllerPath+"/PaginateList";
+}
+
+<div class="card card-dark">
+    <!-- 列表标题区 -->
+    @Html.PaginateListWithModalCardHeader(ViewData["FunctionName"] as string, creatOrEditUrlString, searchWithKeywordUrlString,"dataOperationModal","dataOperationModalContent")
+    <div class="card-body" style="padding-top:8px; overflow-y:auto" id="listContainer">
+        <div class="table-responsive" style="margin-top:-10px;border-top-style:solid;border-top-width:2px;border-top-color:darkblue">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr style="height:45px;background-color:whitesmoke">
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection, defaultListUrlString, "mainWorkPlaceArea")
+                        @Html.ListTableHeader("管理", 50)
+                        @Html.ListTableHeader("编写", 50)
+                        @Html.ListTableHeader("数据操作", 80)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr style="height:30px;background-color:white;border-color:darkgray">
+                        @Html.ListTableDataForListItems(tablelistItemCollection, item)
+                        <td style="background-color:white;border-color:darkgray" class="text-center">
+                            <div style="margin-top:3px">
+                                <a href="javascript:void(0)" onclick="gotoCourseManagement('@item.Id')"><i class="fa fa-user"></i></a>
+                            </div>
+                        </td>
+                        <td style="background-color:white;border-color:darkgray" class="text-center">
+                            <div style="margin-top:3px">
+                                @*<a href="javascript:void(0)" onclick="gotoDefaultCourseContentEdit('@item.Id')"><i class="fa fa-file"></i></a>*@
+                                <a href="~/Teacher/Home/DefaultCourseContentEdit/@item.Id"><i class="fa fa-file"></i></a>
+                            </div>
+                        </td>
+
+                        <td style="background-color:white;border-color:darkgray" class="text-center">
+                            <div style="margin-top:3px">
+                                <a href="javascript:void(0)" onclick="appGotoCreateOrEditWithModal('@item.Id','@creatOrEditUrlString','dataOperationModal','dataOperationModalContent')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="appGotoDetailPartialModal('@item.Id','@detailUrlString','dataOperationModal','dataOperationModalContent')"><i class="fas fa-list-ul text-info"></i></a>
+                                @{
+                                    var deleteTip = "你所选择的数据：<span style=\"font-size:18px\">" + item.Name + "</span> <br> 将被删除，这个删除将永远无法恢复，请你确认是否删除。";
+                                }
+                                <a href="javascript:void(0)" onclick="appOpenDeleteItemModal('deleteItemModal', '@item.Id', '@deleteTip','@deleteUrlString','@defaultListUrlString','mainWorkPlaceArea')"><i class="fas fa-times text-warning"></i> </a>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+                @{
+                    // 补充处理空行
+                    var additionalRowAmount = int.Parse(pageParameter.PageSize) - Model.Count();
+                }
+                @Html.SetAdditionalRowForTable(additionalRowAmount,tablelistItemCollection.Count+3)
+            </table>
+            <div>
+                <div class="text-info">
+                    数据总量是：@ViewData["ItemAmount"] (<b> 当前第 @pageParameter.PageIndex 页 </b>)           
+                </div>
+                
+                @if (Model.Count() > 0)
+                {
+                    <partial name="_PaginationPartial"/>
+                }
+            </div>
+        </div>
+    </div>
+</div>

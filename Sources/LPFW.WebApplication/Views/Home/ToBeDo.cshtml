@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "优农联采软件系统开发服务";
+
+    var publicLinkCollection = ViewData["PublicLinkCollection"] as List<PublicLinkItemVM>;
+    var sprintItemCollection = ViewData["SprintItemCollection"] as List<SprintItem>;
+
+}
+<section class="section">
+    <div class="section-header">
+        <h1>系统功能组织说明 </h1>
+    </div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12" id="commodityConfigArea">
+                <div class="card card">
+                    <div class="card-header" style="border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid">
+                        <h4>系统正在规划中</h4>
+                    </div>
+                    <div class="card-body" style="" id="navigatorTreeViewContainer">
+                        <table class="table table-hover table-bordered table-sm " style="border-color:darkblue">
+                            <thead>
+                                <tr>
+                                    <th scope="col" width="60">编号</th>
+                                    <th scope="col" width="200">里程碑版本</th>
+                                    <th scope="col">简要说明</th>
+                                    <th scope="col" width="110">起始日期</th>
+                                    <th scope="col" width="110">目标日期</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in sprintItemCollection)
+                                {
+                                    <tr>
+                                        <td>@item.Counter</td>
+                                        <td>@item.Version</td>
+                                        <td>@item.Description.</td>
+                                        <td>@item.StartDate</td>
+                                        <td>@item.FinishedDate</td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

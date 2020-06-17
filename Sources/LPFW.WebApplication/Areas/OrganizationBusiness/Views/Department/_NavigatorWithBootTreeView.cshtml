@@ -1,0 +1,20 @@
+﻿<!--
+    部门基础数据管理左侧导航区  
+-->
+@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+
+<div class="card card-dark">
+    <!-- 营运组织选择器 -->
+    <div class="card-header" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid;">
+        <!-- 当前的营运组织 -->
+        <h4 id="treeViewTitle">@ViewData["GroupName"]</h4>
+        <!-- 当前的营运组织Id -->
+        <input type="hidden" id="groupId" name="groupId" value="@ViewData["GroupID"]" />
+        <!-- 当前的营运组织里的缺省单位 Id -->
+        <input type="hidden" id="defaultTypeID" name="defaultTypeID" value="@ViewData["DefaultTypeID"]" />
+    </div>
+    <!-- 单位清单 -->
+    <div class="card-body" style="padding:0px; overflow-y:auto" id="navigatorTreeViewContainer">
+        <div id="navigatorTreeView"></div>
+    </div>
+</div>

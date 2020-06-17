@@ -1,0 +1,90 @@
+﻿<!--
+  部门详细信息配置管理
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@{ 
+    var departmentLinkCollection = Model.DepartmentLinkCollection;
+    var linkString = Model.OrganizationName + " / ";
+    foreach (var item in departmentLinkCollection.OrderBy(x=>x.SortCode))
+    {
+        linkString = linkString+ item.DisplayName + " / " ;
+    }
+
+    var employeeVMCollection = ViewData["EmployeeVMCollection"] as List<LPFW.ViewModels.OrganizationBusiness.EmployeeVM>;
+}
+<section class="section">
+    <div class="section-body">
+        
+        <span style="font-size:20px">部门基础信息</span>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+
+        <ul class="list-unstyled user-details list-unstyled-border list-unstyled-noborder">
+            <li class="media">
+                <img alt="image" class="mr-3 rounded-circle" width="50" src="../..@Model.LeaderVM.AvatarPath">
+                <div class="media-body">
+                    <div class="media-title">@Model.LeaderVM.Name</div>
+                    <div class="text-job text-muted">@Model.LeaderVM.JobTitle</div>
+                    <div class="text-job text-muted">@Model.LeaderVM.Address</div>
+                </div>
+                <div class="media-items">
+                    <div class="media-item">
+                        <div class="media-label">
+                            <a href="#" class="btn"><i class="fas fa-comment"></i> 即时消息 </a>
+                            <a href="#" class="btn"><i class="fas fa-envelope"></i> @Model.LeaderVM.Email</a>
+                            <a href="#" class="btn"><i class="fas fa-phone"></i> @Model.LeaderVM.Mobile</a>
+                        </div>
+                        <div class="media-label float-right">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    配置
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach (var item in employeeVMCollection)
+                                    {
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="configDepartmentLeader('@item.Id','@Model.Id')">@item.Name</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="media">
+                <img alt="image" class="mr-3 rounded-circle" width="50" src="../..@Model.ContactVM.AvatarPath">
+                <div class="media-body">
+                    <div class="media-title">@Model.ContactVM.Name</div>
+                    <div class="text-job text-muted">@Model.ContactVM.JobTitle</div>
+                    <div class="text-job text-muted">@Model.ContactVM.Address</div>
+                </div>
+                <div class="media-items">
+                    <div class="media-item">
+                        <div class="media-label">
+                            <a href="#" class="btn"><i class="fas fa-comment"></i> 即时消息 </a>
+                            <a href="#" class="btn"><i class="fas fa-envelope"></i> @Model.ContactVM.Email</a>
+                            <a href="#" class="btn"><i class="fas fa-phone"></i> @Model.ContactVM.Mobile</a>
+                        </div>
+                        <div class="media-label float-right">
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-outline-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    配置
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach (var item in employeeVMCollection)
+                                    {
+                                        <a class="dropdown-item" href="javascript:void(0)" onclick="configDepartmentContact('@item.Id','@Model.Id')">@item.Name</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;" />
+        <div>层级关系：@linkString </div>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;" />
+        <div>联系地址：@Model.AddressVM.Description </div>
+        <hr style=" height:1px;border:none;border-top:2px dotted #808080;" />
+        <div>工作说明: @Model.Description</div>
+    </div>
+</section>

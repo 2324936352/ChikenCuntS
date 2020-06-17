@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>@ViewData["Title"] - LPFW.WebApplication</title>
+
+    <!-- BootStrap 常规样式 -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <!-- FontAwesome 图标库 -->
+    <link rel="stylesheet" href="~/lib/fontAwesome/css/all.css">
+    <!-- 导航树 jsTree -->
+    <link href="~/lib/jsTree/themes/default/style.css" rel="stylesheet" />
+    <!-- 导航树 bootstrap-treeview -->
+    <link href="~/lib/bootstrap-treeview/bootstrap-treeview.css" rel="stylesheet" />
+    <!-- 富文本编辑器 -->
+    <link href="~/lib/summernote/dist/summernote-bs4.css" rel="stylesheet" />
+    <!-- 上传文件 bootstrap-fileinput 5.0.5 -->
+    <link href="~/lib/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" />
+    <link href="~/lib/bootstrap-fileinput/themes/explorer-fa/theme.min.css" rel="stylesheet" />
+    <!-- spectre -->
+    <link rel="stylesheet" href="~/lib/spectre/spectre.css">
+    <link rel="stylesheet" href="~/lib/spectre/spectre-exp.min.css">
+    <link rel="stylesheet" href="~/lib/spectre/docs.css">
+
+    <!-- 简单的地图 -->
+
+    <!-- 下拉选择器选择器 -->
+    <link href="~/lib/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet">
+    <!-- 前端模板样式 -->
+    <link rel="stylesheet" href="~/lib/stisla/css/style.css">
+    <link rel="stylesheet" href="~/lib/stisla/css/components.css">
+</head>
+
+<body>
+    <div id="app">
+        <div class="main-wrapper">
+            <div class="navbar-bg"></div>
+            <nav class="navbar navbar-expand-lg main-navbar fixed-top">
+                <form class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                    </ul>
+                    <!-- 应用模块名称 -->
+                    <h4 style="color:white;font-size:30px; font-weight:normal; margin-top:13px"> @ViewData["ModuleName"]* </h4>
+                </form>
+                <ul class="navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <!-- 用户简要信息 -->
+                        @await Component.InvokeAsync("LoginUserInfo")
+                        <!-- /用户简要信息 -->
+
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- 侧边栏主菜单 -->
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid">
+                        <div style="font-size:20px;font-weight:bold">
+                            音乐数据管理
+                        </div>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li style="height:35px;" class="active">
+                            <a href="#" class="nav-link has-dropdown" style="font-size:15px"><i class="fa fa-book"></i><span>音乐数据维护 </span></a>
+                            <ul class="dropdown-menu active">
+                                <li><a class="nav-link" href="~/News/ArticleTopic/Index"> 类型管理 </a></li>
+                                <li><a class="nav-link" href="~/News/Home/Index"> 音乐数据管理 </a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+
+            <!-- 主工作区 -->
+            <div class="main-content">
+                @RenderBody()
+            </div>
+
+            <div class="fixed-bottom" style="width: 100%; z-index:0">
+                <div class="row ">
+                    <div class="col-12">
+                        <div style="height:40px;border-top-style:dotted;border-top-color:lightgray;border-top-width:1px;padding:8px;padding-right:35px;background-color:whitesmoke;">
+                            <div class="float-right">
+                                版权 &copy; 2019 <div class="bullet"></div> LightPoint 软件工作室 <div class="bullet"></div> Vision 0.30
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 常规 JS Scripts -->
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/popperJS/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery-nicescroll/jquery.nicescroll.min.js"></script>
+    <script src="~/lib/momentJS/moment.min.js"></script>
+    <script src="~/lib/stisla/js/stisla.js"></script>
+
+    <!-- 附加的 JS Libraies -->
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <!-- 导航树 jsTreeview -->
+    <script src="~/lib/jsTree/jstree.min.js"></script>
+    <!-- 导航树 bootstrap-treeview -->
+    <script src="~/lib/bootstrap-treeview/bootstrap-treeview.js"></script>
+    <!-- 富文本编辑器 -->
+    <script src="~/lib/summernote/dist/summernote-bs4.min.js"></script>
+    <script src="~/lib/summernote/dist/lang/summernote-zh-CN.js"></script>
+    <!-- 支持使用 AJAX -->
+    <script src="~/lib/jquery-form/jquery.form.js"></script>
+    <!-- 下拉选择器 -->
+    <script src="~/lib/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+    <!-- 上传文件 -->
+    <script src="~/lib/bootstrap-fileinput/js/plugins/piexif.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/sortable.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/plugins/purify.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+    @*<script src="~/lib/bootstrap-fileinput/themes/explorer-fa/theme.min.js"></script>*@
+    <script src="~/lib/bootstrap-fileinput/themes/fa/theme.min.js"></script>
+    <script src="~/lib/bootstrap-fileinput/js/locales/zh.js"></script>
+
+    <!-- 模板 JS File -->
+    <script src="~/lib/stisla/js/scripts.js"></script>
+    <script src="~/lib/stisla/js/custom.js"></script>
+
+    <!-- 本系统开发所用的脚本库 -->
+    <script src="~/js/appFunction.js"></script>
+    <script src="~/js/appFunctionForCommon.js"></script>
+    <script src="~/js/appFunctionForPagination.js"></script>
+    <script src="~/js/appFunctionForUpload.js"></script>
+    <!-- 地址选择器 -->
+    <script src="~/js/appChineseArea.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

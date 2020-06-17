@@ -1,0 +1,74 @@
+﻿<!--
+  员工视图模型数据 新建和编辑 局部页    
+-->
+
+@model LPFW.ViewModels.OrganizationBusiness.EmployeeVM
+@using LPFW.HtmlHelper
+@{ 
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+    var formAction = "/" + areaPath + "/" + controllerPath + "/" + actionPath;
+
+    // 处理是否是新建对象的标签数据
+    var isNewString = "true";
+    if (!Model.IsNew)
+    {
+        isNewString = "false";
+    }
+
+    // 处理是否保存成功的数据标签对象
+    var IsSavedString = "false";
+    if (Model.IsSaved)
+    {
+        IsSavedString = "true";
+    }
+
+    // 退出返回到列表页的 url
+    var defaultListUrlString = "/" + areaPath + "/" + controllerPath + "/PaginateList";
+
+    // 获取编辑属性集合
+    var createOrEditItems = ViewData["CreateOrEditItems"] as List<LPFW.ViewModels.ControlModels.CreateOrEditItem>;
+
+}
+
+<div class="card">
+    <!-- 视图模型表单标题区，生成的标题包含 退出 按钮，执行的方法 appGotoDefaultCommonPage 在  appFunctionForCommon.js 中创建，返回列表 -->
+    @Html.PaginateCreateOrEditCardHeader(ViewData["FunctionName"] as string, defaultListUrlString)
+    <div class="card-body" style="padding-top:30px; overflow-y:auto" id="createOrEditContainer">
+        <div class="row">
+            <div class="col-1">
+                <!-- 头像上传 -->
+                @Html.UploadAvatar(Model.Id, Model.Avatar)
+            </div>
+            <div class="col-11">
+                <!-- 视图模型数据编辑表单 -->
+                <form id="boVM_CreateOrEdit" action="@formAction" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+                    <!-- 表单提交错误提示 -->
+                    <!-- 隐藏的元素 -->
+                    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                    <input type="hidden" id="IsNew" name="IsNew" value="@isNewString" />
+                    <input type="hidden" id="IsSaved" name="IsSaved" value="@IsSavedString" />
+
+                    <!-- 根据编辑属性集合缺省生成输入元素 -->
+                    @Html.GetHtmlStringForCreateOrEditItemCollection(createOrEditItems, Model)
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" style="padding:0px; padding-bottom:5px;padding-top:8px;height:50px;border-top-style:dotted;border-top-color:lightgray;border-top-width:1px">
+        <div class="form-group form-row" style="">
+            <div class='col-12 col-md-2 col-sm-2'></div>
+            <div class="col-12 col-md-10 col-sm-10">
+                <!-- 这里的方法在 appFunctionForCommon.js 中创建，提交成功的话，跳转至列表页，否则显示校验结果 -->
+                <button type="button" class="btn btn-primary" onclick="appPaginateSubmitCreateOrEditForm('boVM_CreateOrEdit','@defaultListUrlString','mainWorkPlaceArea')"><i class="fa fa-send"></i> 提交数据</button>
+                <button type="reset" class="btn btn-success"><i class="fa fa-refresh"></i> 重置表单</button>
+                @if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+                {
+                    <span id="boVM_CreateOrEdit_Error" class="text-center text-danger " style='margin-left:20px; margin-top:7px'><b>@Model.ErrorMessage</b></span>
+                }
+            </div>
+        </div>
+    </div>
+</div>

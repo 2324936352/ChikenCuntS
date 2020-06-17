@@ -1,0 +1,54 @@
+﻿@model LPFW.ViewModels.TeachingBusiness.CourseItemContentVM
+@using LPFW.HtmlHelper
+@{
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+    var formAction = "/" + areaPath + "/" + controllerPath + "/" + actionPath;
+
+    var itemName = "";
+    if (!String.IsNullOrEmpty(Model.CourseItemName))
+    {
+        itemName = Model.CourseItemName;
+    }
+
+}
+
+<input type="hidden" id="CourseId" name="CourseId" value="@Model.CourseId" />
+<input type="hidden" id="CourseName" name="CourseName" value="@Model.CourseName" />
+
+<div class="card card-dark">
+    <!-- 列表标题区 -->
+    <div class="card-header">
+        <h4 style="font-size:22px;font-weight:normal;color:dimgray">@itemName</h4>
+        <div class="card-header-form">
+            <div class="input-group">
+                <a class="btn btn-outline-danger" href="~/Teacher/Home/CourseList/@Model.CourseContainerId"><i class="fas fa-times"></i> 退出 </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" style="padding-top:8px; overflow-y:auto" id="listContainer">
+        @Html.SetHtml(Model.Description)
+
+        @if (!String.IsNullOrEmpty(@Model.BusinessVideoVM.FilePath))
+        {
+            <div class="text-center">
+                <video id="my-player"
+                       class="video-js"
+                       controls
+                       preload="none"
+                       width="640"
+                       height="264"
+                       poster="@Model.BusinessVideoCoverPage.FilePath"
+                       data-setup='{}'>
+
+                    <source src="@Model.BusinessVideoVM.FilePath" type="video/mp4" />
+                </video>
+            </div>
+        }
+
+        @Html.SetHtml(Model.BodyContent)
+
+    </div>
+
+</div>

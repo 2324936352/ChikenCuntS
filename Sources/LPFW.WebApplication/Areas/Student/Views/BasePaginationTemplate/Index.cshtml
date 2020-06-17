@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{
+    var pageGroup = ViewData["PageGroup"] as LPFW.DataAccess.Tools.PagenateGroup;
+    var pageParameter = ViewData["ListPageParameter"] as LPFW.DataAccess.Tools.ListPageParameter;
+    var entityController = ViewContext.RouteData.Values["controller"].ToString();
+}
+
+<div class="row">
+    <div class="col-12 col-md-12 col-lg-12" id="mainWorkPlaceArea">
+        <!-- 一般在 id="mainWorkPlaceArea" 的区域里，使用列表、编辑、明细几个常规的局部页进行渲染 -->
+        @await Html.PartialAsync("_PaginationCommonList",Model)
+    </div>
+</div>
+
+<!-- 一组用于留存查询、分页、导航处理等相关的中间变量，方便需要的时候提取 -->
+@Html.SetListPageParameter(pageParameter)
+
+<!-- 删除分页对象确认提交会话框 -->
+@await Html.PartialAsync("_PaginateCommonDeleteItemModal")
+
+<!-- 上传选择器会话框 -->
+@await Html.PartialAsync("_CommonBusinessFileCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessImageCollectionSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoSelectorModal")
+@await Html.PartialAsync("_CommonBusinessVideoCoverSelectorModal")
+@await Html.PartialAsync("_CommonAvatarSelectorModal")
+
+@section Scripts{
+    <script>
+        // 加载入口页时需要处理的基本控件
+        $(function () {
+            // 当浏览器大小变化时，重新设置相关的 div 的高度
+            window.onresize = function (event) {
+                resetDivHeight();
+            };
+
+            // 设置相关的 div 的高度
+            resetDivHeight();
+
+            // 初始化与上传插件相关的 boot-fileinput 插件
+            appInitialUpload();
+
+        });
+
+        /*
+         * 当在页面上调用 appGotoCreateOrEditWithPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonCreateOrEdit 页面的元素
+         */
+        function initialGotoCreateOrEditWithPartialView() {
+            resetDivHeight();
+        }
+
+        /*
+         * 当在页面上调用 appGotoDetailPartialView 方法时，通过控制器返回局部视图时调用这个方法。
+         * 这个方法用于初始化 _CommonDetail 局部视图的元素
+         */
+        function initialDetailPartialView() {
+            resetDivHeight();
+        }
+
+    </script>
+}

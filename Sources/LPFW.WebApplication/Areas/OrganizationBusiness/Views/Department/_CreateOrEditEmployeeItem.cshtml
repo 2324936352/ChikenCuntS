@@ -1,0 +1,63 @@
+﻿<!--
+  新建或者编辑部门员工数据
+-->
+
+@model LPFW.ViewModels.OrganizationBusiness.EmployeeVM
+@using LPFW.HtmlHelper
+@{
+    var editorTitle = "新增部门员工";
+    if (!Model.IsNew)
+        editorTitle = Model.Name;
+
+    var createOrEditItems = ViewData["CreateOrEditEmployeeItems"] as List<LPFW.ViewModels.ControlModels.CreateOrEditItem>;
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+    var formAction = "/" + areaPath + "/" + controllerPath + "/" + actionPath;
+
+    // 处理是否是新建对象的标签数据
+    var isNewString = "true";
+    if (!Model.IsNew)
+    {
+        isNewString = "false";
+    }
+
+    // 处理是否保存成功的数据标签对象
+    var IsSavedString = "false";
+    if (Model.IsSaved)
+    {
+        IsSavedString = "true";
+    }
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="float-lg-right">
+            <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" onclick="gotoDepartmentConfigRoute('@Model.DepartmentId','ConfigEmployee')"><i class="fas fa-times"></i> 退出编辑 </a>
+        </div>
+        <span style="font-size:20px">@editorTitle </span>
+        <hr style="height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+        <div style="margin-top:30px">
+            <!-- 视图模型数据编辑表单 -->
+            <form id="createOrEditEmployeeItems" action="@formAction" method="post" class="form-horizontal form-label-left" enctype="multipart/form-data" novalidate>
+                <!-- 隐藏的元素 -->
+                <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+                <input type="hidden" id="IsNew" name="IsNew" value="@isNewString" />
+                <input type="hidden" id="IsSaved" name="IsSaved" value="@IsSavedString" />
+                <!-- 根据编辑属性集合缺省生成输入元素 -->
+                @Html.GetHtmlStringForCreateOrEditItemCollection(createOrEditItems, Model)
+            </form>
+            <hr style="height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+
+            <button type="button" class="btn btn-primary" onclick="submitCreateOrEditEmployeeItemsForm()"><i class="fa fa-send"></i> 提交数据</button>
+            <button type="reset" class="btn btn-success"><i class="fa fa-refresh"></i> 重置表单</button>
+
+            @if (!String.IsNullOrEmpty(@Model.ErrorMessage))
+            {
+                <span id="boVM_CreateOrEdit_Error" class="text-center text-danger " style='margin-left:20px; margin-top:7px'><b>@Model.ErrorMessage</b></span>
+            }
+
+        </div>
+    </div>
+</section>

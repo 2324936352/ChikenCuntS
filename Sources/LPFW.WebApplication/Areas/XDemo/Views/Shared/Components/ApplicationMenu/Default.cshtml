@@ -1,0 +1,44 @@
+﻿@model IEnumerable<LPFW.ViewModels.ApplicationCommon.AppPathAndMenu.ApplicationMenuItemVM>
+@{
+    var applicationMenuGroupCollection = ViewData["ApplicationMenuGroupCollection"] as List<LPFW.ViewModels.ApplicationCommon.AppPathAndMenu.ApplicationMenuGroupVM>;
+    var applicationMenuGroup = ViewData["ApplicationMenuGroup"] as LPFW.ViewModels.ApplicationCommon.AppPathAndMenu.ApplicationMenuGroupVM;
+    var activeItemId = (Guid)ViewData["ApplicationMenuItemActiveId"];
+}
+<div class="sidebar-brand" style="background-color:whitesmoke; border-bottom-color:darkgray;border-bottom-width:1px;border-bottom-style:solid">
+    <ul class="navbar-nav navbar-right" style="margin-top:10px">
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                <div class="d-sm-none d-lg-inline-block" style="font-size:22px;font-style:normal;font-weight:normal" id="mainMenuAreaTitle">@applicationMenuGroup.Name</div>
+            </a>
+            <div class="dropdown-menu">
+                @foreach (var item in applicationMenuGroupCollection.OrderBy(x => x.SortCode).Where(x => x.Id != applicationMenuGroup.Id))
+                {
+                    <a href="/Admin/Home/Index/@item.Id" class="dropdown-item">@item.Name</a>
+                }
+            </div>
+        </li>
+    </ul>
+</div>
+<ul class="sidebar-menu">
+    @foreach (var item in Model.OrderBy(x => x.SortCode).Where(x => x.Id.ToString() == x.ParentItemId))
+    {
+        var activeString = "";
+        if (item.Id == activeItemId)
+        {
+            activeString = "active";
+        }
+
+        <li class="nav-item dropdown @activeString " >
+            <a href="#" class="nav-link has-dropdown" style="font-size:15px"><i class="@item.IconString"></i><span>@item.Name</span></a>
+            <ul class="dropdown-menu">
+                @{
+                    var subItemCollection = Model.OrderBy(x => x.SortCode).Where(x => x.ParentItemId == item.Id.ToString() && x.ParentItemId != x.Id.ToString());
+                    foreach (var subItem in subItemCollection)
+                    {
+                        <li><a class="nav-link" href="@subItem.UrlString">@subItem.Name</a></li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+</ul>

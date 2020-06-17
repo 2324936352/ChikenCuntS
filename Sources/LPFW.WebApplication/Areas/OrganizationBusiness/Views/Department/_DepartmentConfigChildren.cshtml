@@ -1,0 +1,46 @@
+﻿<!--
+  部门下级部门信息配置管理
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@using LPFW.HtmlHelper
+@{
+    var childrenItemCollection = ViewData["ChildrenItemCollection"] as List<LPFW.ViewModels.OrganizationBusiness.DepartmentVM>;
+    var tablelistItemCollection = ViewData["ChildrenItemListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+}
+
+<section class="section">
+    <div class="section-body">
+        <div class="float-lg-right">
+            <a class="btn btn-sm btn-outline-primary" href="javascript:void(0)" onclick="createOrEditChildrenItem('@Guid.NewGuid()','@Model.Id')"><i class="fa fa-plus"></i> 添加下级部门 </a>
+        </div>
+        <span style="font-size:20px">下级部门信息</span>
+        <hr style="height:1px;border:none;border-top:2px dotted #808080;margin-top:5px" />
+        <div class="table-responsive" style="">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        @Html.ListTableHeaderForListItems(tablelistItemCollection, "", "")
+                        @Html.ListTableHeader("维护", 50)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in childrenItemCollection)
+                    {
+                        <tr style="background-color:white;border-color:darkgray">
+                            <!-- 数据集合元素列表 -->
+                            @Html.ListTableDataForListItems(tablelistItemCollection, item)
+
+                            <!-- 数据操作 -->
+                            <td style="background-color:white;border-color:darkgray" class="text-center">
+                                <a href="javascript:void(0)" onclick="createOrEditChildrenItem('@item.Id','@Model.Id')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteChildrenItem('@item.Id','@Model.Id')"><i class="fas fa-times text-warning"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>

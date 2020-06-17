@@ -1,0 +1,52 @@
+﻿@model IEnumerable<LPFW.ViewModels.EntityViewModel>
+@using LPFW.HtmlHelper
+@{ 
+
+    var listItems = ViewData["ListItems"] as List<LPFW.ViewModels.ControlModels.TableListItem>;
+
+    // 提取控制器路径
+    var controllerPath = "/" + ViewContext.RouteData.Values["area"].ToString() + "/" + ViewContext.RouteData.Values["controller"].ToString();
+
+    // 新建或者编辑对象的路径
+    var creatOrEditAction = controllerPath + "/CreateOrEditWithGroup/";
+    // 根据关键词检索列表数据的路径
+    var searchWithKeywordAction = controllerPath + "/List";
+    // 明细数据路径
+    var detailAction = controllerPath + "/Detail/";
+    // 删除数据路径
+    var deleteAction = controllerPath + "/Delete/";
+    // 缺省的列表页路径
+    var defaultListAction =  controllerPath + "/List";
+}
+<div class="card card-dark">
+    <!-- 列表标题区 -->
+    @Html.CommonListByTypeWithModalCardHeader(ViewData["FunctionName"] as string, creatOrEditAction, searchWithKeywordAction,"dataOperationModal","dataOperationModalContent")
+    <div class="card-body" style="padding-top:-5px; overflow-y:auto"  id="listContainer">
+        <div class="table-responsive" style="margin-top:-10px">
+            <table class="table table-bordered table-striped table-sm">
+                <thead>
+                    <tr>
+                        @Html.ListTableHeaderForListItems(listItems,defaultListAction,"mainWorkPlaceArea")
+                        @Html.ListTableHeader("数据操作",80)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="background-color:white;border-color:darkgray">
+                            @Html.ListTableDataForListItems(listItems,item)
+
+                            <td style="background-color:white;border-color:darkgray">
+                                <!-- 以下几个方法在 appFunction.js 中创建，常规列表和分页列表均适用 -->
+                                <a href="javascript:void(0)" onclick="appGotoCreateOrEditByTypeWithModal('@item.Id','@creatOrEditAction','dataOperationModal','dataOperationModalContent')"><i class="far fa-edit"></i></a>
+                                <a href="javascript:void(0)" onclick="appGotoDetailPartialModal('@item.Id','@detailAction','dataOperationModal','dataOperationModalContent')"><i class="fas fa-list-ul text-info"></i></a>
+                                @{ var deleteTip = "你所选择的数据：<b>"+item.Name+"</b> 将被删除，请你确认";}
+                                <a href="javascript:void(0)" onclick="appOpenDeleteItemModal('deleteItemModal', '@item.Id', '@deleteTip','@deleteAction','@defaultListAction','mainWorkPlaceArea')"><i class="fas fa-times text-warning"></i> </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+             </table>
+        </div>
+    </div>
+</div>

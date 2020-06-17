@@ -1,0 +1,67 @@
+﻿@model IEnumerable<LPFW.ViewModels.Demo.DemoEntityItemVM>
+@using LPFW.HtmlHelper
+@using LPFW.ViewModels.ControlModels
+@{ 
+    int counter = 0;
+}
+
+<div class="table-responsive" style="margin-top:-1px;border-top-style:solid;border-top-width:1px;border-top-color:darkblue">
+    <table class="table table-bordered table-striped table-sm">
+        <thead>
+            <tr style="background-color:whitesmoke">
+                <td width="60">编号</td>
+                <td>商品名称</td>
+                <td width="90">数量</td>
+                <td width="90">参考价</td>
+                <td width="90">小计</td>
+                <td width="40">操作</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="height:30px;background-color:white;border-color:darkgray">
+                    <td>
+                        @item.OrderNumber
+                        <input type="hidden" id="DemoEntityItemVMCollection[@counter].Id" name="DemoEntityItemVMCollection[@counter].Id" value="@item.Id" />
+                        <input type="hidden" id="DemoEntityItemVMCollection[@counter].DemoEntityId" name="DemoEntityItemVMCollection[@counter].DemoEntityId" value="@item.DemoEntityId" />
+                        <input type="hidden" id="DemoEntityItemVMCollection[@counter].SortCode" name="DemoEntityItemVMCollection[@counter].SortCode" value="@item.SortCode" />
+                    </td>
+                    <td>
+                        @{
+                            // 常规输入控件
+                            // var createOrEditItem01 = new CreateOrEditItem() { PropertyName = "Name", TipsString = "", DataType = ViewModelDataType.单行文本 };
+
+                            // 输入控件只读
+                            // var createOrEditItem01 = new CreateOrEditItem() { PropertyName = "Name", TipsString = "", DataType = ViewModelDataType.单行文本, IsReadonly = true };
+
+                            // 输入控件只读，并且显示为平面文字
+                            var createOrEditItem01 = new CreateOrEditItem() { PropertyName = "Name", TipsString = "", DataType = ViewModelDataType.单行文本, IsReadonlyPlainText = true };
+
+                            @Html.GetTableListItemInput(createOrEditItem01, item, "DemoEntityItemVMCollection[" + counter + "]")
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var createOrEditItem02 = new CreateOrEditItem() { PropertyName = "Amount", TipsString = "", DataType = ViewModelDataType.单行文本 };
+                            @Html.GetTableListItemInput(createOrEditItem02, item, "DemoEntityItemVMCollection[" + counter + "]")
+                        }
+                    </td>
+                    <td>
+                        @{
+                            var createOrEditItem03 = new CreateOrEditItem() { PropertyName = "UnitPrice", TipsString = "", DataType = ViewModelDataType.单行文本 };
+                            @Html.GetTableListItemInput(createOrEditItem03, item, "DemoEntityItemVMCollection[" + counter + "]")
+                        }
+                    </td>
+                    <td>@item.SubTotal</td>
+                    <td class="text-center">
+                        <div style="margin-top:3px">
+                            <a href="javascript:void(0)" onclick="removeItem('@item.DemoEntityId','@item.Id')"><i class="fa fa-times text-warning"></i> </a>
+                        </div>
+                    </td>
+                </tr>
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>

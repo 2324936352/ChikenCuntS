@@ -1,0 +1,33 @@
+﻿<!--
+    部门详细信息
+-->
+@model LPFW.ViewModels.OrganizationBusiness.DepartmentVM
+@using LPFW.HtmlHelper
+@{
+    // 提取控制器路径
+    var areaPath = ViewContext.RouteData.Values["area"].ToString();
+    var controllerPath = ViewContext.RouteData.Values["controller"].ToString();
+    var actionPath = ViewContext.RouteData.Values["action"].ToString();
+
+    // 退出返回到列表页的 url
+    var defaultListUrlString = "/" + areaPath + "/" + controllerPath + "/List";
+}
+
+<div class="card">
+    <div class="card-header" style="border-bottom-style:dotted;border-bottom-color:lightgray;border-bottom-width:1px">
+        <h4 style="font-size:22px;font-weight:normal;color:dimgray"> @Model.Name </h4>
+        <div class="card-header-form">
+            <button class="btn btn-outline-primary" onclick="gotoDepartmentDetailInfo('@Model.Id','DetailInfo')"> 基本信息 </button>
+            <button class="btn btn-outline-primary" onclick="gotoDepartmentDetailInfo('@Model.Id','EmployeeList')"> 部门员工 </button>
+            <button class="btn btn-outline-primary" onclick="gotoDepartmentDetailInfo('@Model.Id','PositionList')"> 部门岗位 </button>
+            <button class="btn btn-outline-primary" onclick="gotoDepartmentDetailInfo('@Model.Id','KpiList')"> 绩效指标 </button>
+
+            <button class="btn btn-outline-danger" onclick="appGotoDefaultCommonPage('@defaultListUrlString','mainWorkPlaceArea')"><i class="fas fa-times"></i> 退出 </button>
+        </div>
+    </div>
+    <div class="card-body" style="padding-top:30px; overflow-y:auto" id="departmentDetailInfoArea">
+        <partial name="../../Views/TransactionBusiness/Department/_DetailInfo" model="@Model" ]" />
+    </div>
+    <div class="card-footer" style="padding:0px; padding-bottom:5px;padding-top:8px;height:50px;border-top-style:dotted;border-top-color:lightgray;border-top-width:1px">
+    </div>
+</div>
