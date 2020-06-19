@@ -57,7 +57,7 @@ namespace LPFW.WebApplication.Areas.MusicUI.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    City = model.City
+                  
 
                 };
                 //将用户数据存储在AspNetUsers数据库表中

@@ -29,7 +29,7 @@ namespace LPFW.EntitiyModels.ApplicationCommon.RoleAndUser
         public bool Sex { get; set; }//性别
         public DateTime Birthdays { get; set; }//生日
 
-        public string City { get; set; }//城市
+        
         public ApplicationUser() : base()
         {
             this.Id = Guid.NewGuid();

@@ -1,80 +1,76 @@
 ﻿
 
-    <textarea name="" id="txt" cols="30" rows="10" style="display: none;">
-        [00:00.00]Lemon - 米津玄師 (よねづ けんし)
-        [00:00.20]词：米津玄師
-        [00:00.30]曲：米津玄師
-        [00:01.60]夢ならば
-        [00:02.50]どれほどよかったでしょう
-        [00:06.96]未だにあなたのことを夢にみる
-        [00:12.14]忘れた物を取りに帰るように
-        [00:17.68]古びた思い出の埃を払う
-        [00:26.13]戻らない幸せがあることを
-        [00:31.43]最後にあなたが教えてくれた
-        [00:36.93]言えずに隠してた昏い過去も
-        [00:42.53]あなたがいなきゃ
-        [00:44.91]永遠に昏いまま
-        [00:48.67]きっともうこれ以上
-        [00:51.15]傷つくことなど
-        [00:53.80]ありはしないとわかっている
-        [00:58.54]あの日の悲しみさえ
-        [01:01.28]あの日の苦しみさえ
-        [01:04.11]そのすべてを愛してた
-        [01:07.04]あなたとともに
-        [01:09.64]胸に残り離れない
-        [01:12.59]苦いレモンの匂い
-        [01:15.65]雨が降り止むまでは帰れない
-        [01:21.30]今でもあなたはわたしの光
-        [01:37.93]暗闇であなたの背をなぞった
-        [01:43.16]その輪郭を鮮明に覚えている
-        [01:48.78]受け止めきれないものと
-        [01:51.81]出会うたび
-        [01:54.24]溢れてやまないのは涙だけ
-        [02:00.37]何をしていたの
-        [02:02.81]何を見ていたの
-        [02:05.58]わたしの知らない横顔で
-        [02:10.66]どこかであなたが今
-        [02:13.12]わたしと同じ様な
-        [02:15.92]涙にくれ
-        [02:17.31]淋しさの中にいるなら
-        [02:21.41]わたしのことなどどうか
-        [02:24.67]忘れてください
-        [02:27.48]そんなことを心から願うほどに
-        [02:33.17]今でもあなたはわたしの光
-        [02:41.76]自分が思うより
-        [02:46.96]恋をしていたあなたに
-        [02:52.37]あれから思うように
-        [02:58.00]息ができない
-        [03:03.58]あんなに側にいたのに
-        [03:08.97]まるで嘘みたい
-        [03:14.18]とても忘れられない
-        [03:19.80]それだけが確か
-        [03:30.69]あの日の悲しみさえ
-        [03:33.16]あの日の苦しみさえ
-        [03:35.87]そのすべてを愛してた
-        [03:38.67]あなたとともに
-        [03:41.27]胸に残り離れない
-        [03:44.41]苦いレモンの匂い
-        [03:47.29]雨が降り止むまでは帰れない
-        [03:52.83]切り分けた果実の片方の様に
-        [03:58.39]今でもあなたはわたしの光 
-    </textarea>
 
-    <!-- 架子 -->
-    <article class="photo">
-        <div class="title">Lemon</div>
-        <div class="singer">米津玄师</div>
-        <div class="play"></div>
-        <div class="lrc">
-            <div class="content"></div>
+    <!-- start music -->
+    <div id="Music">
+        <!-- 左边 -->
+        <div class="MusicL">
+            <!-- 歌词显示 -->
+            <div class="lyric">
+            </div>
         </div>
-    </article>
-    <audio controls="controls">
-       
-    </audio>
-    <audio id="myMusic" src="~/images/Music/Lemon.flac">
-        您的浏览器不支持音频播放！！！！
-    </audio>
-
-
+        <!-- 右边 -->
+        <div class="MusicR">
+            <!-- 歌曲封面、歌曲名称 -->
+            <ul>
+                <li><img id="songFace" src="" width="120"></li>
+                <li><span id="songName"></span></li>
+            </ul>
+            <p>列表共有<span id="maxSongNum" style="color: #ffbc00">0</span>首音乐</p>
+            <!-- 歌曲列表 -->
+            <div class="songList">
+                <ul id="songList"></ul>
+            </div>
+        </div>
+        <!-- 控制器  -->
+        <div class="footer">
+            <!-- 时间进度条 -->
+            <section class="progress" id="progress">
+                <div class="bg" id="progress_bg"></div>
+                <div class="bar" id="progress_bar"></div>
+            </section>
+            <div class="btn">
+                <!-- 上一首、播放/暂停、下一首 -->
+                <i class="iconfont icon-shangyishoushangyige" onclick="preSong()"></i>
+                <i class="iconfont icon-bofang" id="play" onclick="playAndStop()"></i>
+                <i class="iconfont icon-xiayigexiayishou" onclick="nextSong()"></i>
+                <ul>
+                    <!--重新播放-->
+                    <li>
+                        <i class="iconfont icon-zhongxinshiyang replay" onclick="replay();"></i>
+                    </li>
+                    <!-- 播放样式 -->
+                    <li>
+                        <i class="iconfont icon-liebiaoshunxu playStyle" onclick="playStyleClick()"></i>
+                    </li>
+                    <!-- 音量控制 -->
+                    <li>
+                        <i class="iconfont icon-icon_huabanfuben volume" id="volume" onclick="ableOrEnableVolume()"></i>
+                        <div class="volume_wall" id="volume_wall">
+                            <span id="volume_num"></span>
+                            <div class="volume_bar"></div>
+                        </div>
+                    </li>
+                    <!--词控制 -->
+                    <li>
+                        <!-- 词颜色显示 -->
+                        <div class="lyric_alert">
+                            <p>目 前： <span id="nowLyricColor"></span></p>
+                            <p>下一首: <span id="nextLyricColor"></span></p>
+                        </div>
+                        <i class="icon_lyric" onclick="changeLyricColor()">词</i>
+                    </li>
+                </ul>
+            </div>
+            <!-- 播放风格信息 -->
+            <div id="playStyle">顺序播放</div>
+            <!-- 当前播放信息 -->
+            <div class="info">
+                <p>当前: &nbsp;<span id="info_SongName"></span></p>
+                <p>歌手: &nbsp;<span id="info_Autor"></span></p>
+                <p>时间: &nbsp;<span id="info_Time"></span></p>
+            </div>
+        </div>
+    </div>
     
+    <!-- end music -->
