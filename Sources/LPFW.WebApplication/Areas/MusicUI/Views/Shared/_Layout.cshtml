@@ -10,9 +10,9 @@
         <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
         @*<link href="~/css/MusicStyle.css" rel="stylesheet" />*@
 
-         <link href="~/Music/css/iconfont.css" rel="stylesheet" />
+        <link href="~/Music/css/iconfont.css" rel="stylesheet" />
         <link href="~/Music/css/music.css" rel="stylesheet" />
-        
+
 
     </environment>
 
@@ -29,7 +29,6 @@
 
     @*<link href="~/css/site.css" rel="stylesheet" />*@
    
-
 </head>
 <body>
 
@@ -118,28 +117,31 @@
 
 
         @RenderBody()
+      
 
     </div>
+    <script src="~/Music/js/music.js"></script>
 
-    <audio src="" id="myMusic"></audio>
+  
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @*<script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>*@
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    @*<script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>*@
+
+    <script src="~/Music/css/iconfont.js"></script>
+    @*<script src="~/Music/js/jquery-1.11.3.min.js"></script>*@
+
+    <script src="~/Music/css/iconfont.js"></script>
     <script>
+        //window.onload(function () {
+        //
+        //})
         $(function () {
             initMusic();//初始化
         });
     </script>
-
-
-    @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
-    @*<script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>*@
-    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
-    <script src="~/Music/js/music.js"></script>
-    <script src="~/Music/css/iconfont.js"></script>
-    <script src="~/Music/js/jquery-1.11.3.min.js"></script>
-
-    <script src="~/Music/css/iconfont.js"></script>
-
     @RenderSection("Scripts", required: false)
 
 </body>

@@ -557,7 +557,7 @@ function changeNowLyricColorInfo(value) {
 function changeSongStatus(songName) {
     changeSongName(songName);
     changeSongImg(songName);
-    $myMusic[0].src = "music/" + songName + ".mp3";
+    $myMusic[0].src = "/Music/music/" + songName + ".mp3";
     play();
 }
 
@@ -574,7 +574,7 @@ function changeSongName(songName) {
  */
 function changeSongImg(songName) {
     if (songName) {
-        var path = "music/songImg/" + songName + ".jpg";
+        var path = "/Music/music/songImg/" + songName + ".jpg";
         $songFace.attr('src', path);
     }
 }
@@ -599,7 +599,8 @@ function loadFile(name) {
     xhr.open('GET', name, false);
     xhr.overrideMimeType("text/html;charset=gbk");
     xhr.send(null);
-    return xhr.status === okStatus ? xhr.responseText : null;
+    return xhr.responseText;
+    //return xhr.status === okStatus ? xhr.responseText : null;
 }
 
 
@@ -608,7 +609,7 @@ function loadFile(name) {
  * @param songName
  */
 function loadLyric(songName) {
-    let text = loadFile("music/Lyric/" + songName + ".lrc");
+    let text = loadFile("/Music/music/Lyric/" + songName + ".lrc");
     getLyric(text);
 }
 
@@ -619,7 +620,7 @@ function loadLyric(songName) {
 function loadMusicList() {
     let xhr = new XMLHttpRequest(),
         okStatus = document.location.protocol === "file:" ? 0 : 200;
-    xhr.open('GET', "music/musicList.txt", false);
+    xhr.open('GET', "/Music/music/musicList.txt", false);
     xhr.overrideMimeType("text/html;charset=utf-8");
     xhr.send(null);
     return xhr.status === okStatus ? xhr.responseText : null;
