@@ -613,6 +613,33 @@ namespace LPFW.ORM.Migrations
                     b.ToTable("MusicType");
                 });
 
+            modelBuilder.Entity("LPFW.EntitiyModels.MusicUIEntity.MusicCore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassName")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MusicCores");
+                });
+
             modelBuilder.Entity("LPFW.EntitiyModels.OrganzationBusiness.Department", b =>
                 {
                     b.Property<Guid>("Id")

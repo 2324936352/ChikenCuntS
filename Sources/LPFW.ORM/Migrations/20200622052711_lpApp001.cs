@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LPFW.ORM.Migrations
@@ -317,6 +318,22 @@ namespace LPFW.ORM.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MDemo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MusicCores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 50, nullable: false),
+                    ClassName = table.Column<int>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    PhotoPath = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MusicCores", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -2018,6 +2035,9 @@ namespace LPFW.ORM.Migrations
 
             migrationBuilder.DropTable(
                 name: "Music");
+
+            migrationBuilder.DropTable(
+                name: "MusicCores");
 
             migrationBuilder.DropTable(
                 name: "OrganizationBusinessProcessActivities");

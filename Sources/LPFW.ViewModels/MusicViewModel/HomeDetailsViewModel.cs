@@ -5,7 +5,7 @@ namespace LPFW.ViewModels.MusicViewModel
 {
     public class HomeDetailsViewModel
     {
-        public Student Student { get; set; }
+        public MusicCore Student { get; set; }
         public string PageTitle { get; set; }
     }
 }

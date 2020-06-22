@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace LPFW.WebApplication.Areas.MusicUI.Controllers
 {
     [Area("MusicUI")]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         private UserManager<ApplicationUser> userManager;
         private SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountsController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
 
             this.userManager = userManager;

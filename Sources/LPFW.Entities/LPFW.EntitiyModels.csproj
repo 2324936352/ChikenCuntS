@@ -49,8 +49,4 @@
     <ProjectReference Include="..\LPFW.Foundation\LPFW.Foundation.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MusicUIEntity\" />
-  </ItemGroup>
-
 </Project>

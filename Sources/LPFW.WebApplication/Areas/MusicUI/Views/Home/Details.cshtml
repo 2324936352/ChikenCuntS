@@ -15,9 +15,10 @@
                 <div class="card-body text-center">
                     <img class="card-img-top" src="@photoPath" asp-append-version="true" />
 
-                    <h4>学生ID : @Model.Student.Id</h4>
-                    <h4>邮箱 : @Model.Student.Email</h4>
-                    <h4>班级名称 : @Model.Student.ClassName</h4>
+                    <h4>歌曲ID : @Model.Student.Id</h4>
+                    <h4>歌曲名称 : @Model.Student.Name</h4>
+                    <h4>歌手名称 : @Model.Student.SingerName</h4>
+                    <h4>类型名称 : @Model.Student.TypeName</h4>
                 </div>
                 <div class="card-footer text-center">
                     <a  asp-action="Index" asp-controller="home" class="btn btn-primary">返回</a>

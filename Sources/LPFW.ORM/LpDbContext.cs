@@ -98,6 +98,7 @@ namespace LPFW.ORM
 
 
         public DbSet<MusicDemo> MDemo { get; set; }
+        public DbSet<MusicCore> MusicCores { get; set; }
         //public DbSet<MusicUser> MusicUsers { get; set; }
         #region 音乐堡垒实体
         //public DbSet<Album> Albums { get; set; }//

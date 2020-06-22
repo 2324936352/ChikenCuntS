@@ -11,6 +11,10 @@ using Microsoft.Extensions.DependencyInjection;
 using LPFW.EntitiyModels.ApplicationCommon.RoleAndUser;
 using Microsoft.Extensions.Hosting;
 using LPFW.WebApplication.Helpers;
+using LPFW.ViewModels.MusicViewModel;
+using LPFW.EntitiyModels.MusicUIEntity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace LPFW.WebApplication
 {
@@ -91,14 +95,22 @@ namespace LPFW.WebApplication
             });
 
             // 添加 MVC
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(); 
+            //services.AddMvc(config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
 
+
+            //}).AddXmlSerializerFormatters();
             // 添加 IEntityRepository，IViewModelService 等业务数据处理相关的依赖注入元素
             services.BusinessEntityDependencyInjector();
 
             // 添加定制的控制器过滤器
             services.BusinessFilterConfig();
-
+            //依赖注入
+            services.AddScoped<IStudentRepository, SQLStudentRepository>();
+            services.AddTransient<MusicCore>(); 
         }
 
         /// <summary>
@@ -188,6 +200,7 @@ namespace LPFW.WebApplication
                    areaName: "MusicUI",
                    pattern: "MusicUI/{controller=Home}/{action=Index}/{id?}"
                    );
+             
             });
         }
     }

@@ -60,7 +60,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\MusicUI\Views\Admin\" />
-    <Folder Include="Areas\MusicUI\Views\Account\" />
     <Folder Include="Views\Common\" />
     <Folder Include="wwwroot\lib\jsTree\" />
     <Folder Include="wwwroot\Music\css\" />
