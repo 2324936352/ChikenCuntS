@@ -63,7 +63,6 @@
     <Folder Include="Views\Common\" />
     <Folder Include="wwwroot\lib\jsTree\" />
     <Folder Include="wwwroot\Music\css\" />
-    <Folder Include="wwwroot\Music\images\" />
     <Folder Include="wwwroot\Music\js\" />
     <Folder Include="wwwroot\Music\music\" />
     <Folder Include="wwwroot\uploadFiles\images\" />
