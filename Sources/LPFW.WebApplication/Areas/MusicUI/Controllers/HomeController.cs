@@ -105,9 +105,8 @@ namespace LPFW.WebApplication.Areas.MusicUI.Controllers
                     lyricPath = LyricFileName,
                     PhotoPath = uniqueFileName
                 };
-                StreamWriter sw = new StreamWriter("wwwroot/Music/music/musicList.txt", false, System.Text.Encoding.Default);    //一定在写绝对路径
-                sw.WriteLine($"[{model.Name},{model.Name}]");
-                sw.WriteLine(); //输入空行  
+                StreamWriter sw = new StreamWriter("wwwroot/Music/music/musicList.txt", true, System.Text.Encoding.Default);    //一定在写绝对路径
+                sw.WriteLine($"[{model.Name},{model.SingerName}]"); 
                 sw.Close();//关闭文件
 
 
