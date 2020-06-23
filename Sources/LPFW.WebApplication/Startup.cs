@@ -52,6 +52,11 @@ namespace LPFW.WebApplication
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            //配置文件上传
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = long.MaxValue;
+            });
             // 配置身份识别的相关策略
             services.Configure<IdentityOptions>(options => 
             {

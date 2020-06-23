@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LPFW.ORM.Migrations
@@ -327,9 +326,11 @@ namespace LPFW.ORM.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ClassName = table.Column<int>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
-                    PhotoPath = table.Column<string>(nullable: true)
+                    TypeName = table.Column<int>(nullable: false),
+                    SingerName = table.Column<string>(nullable: true),
+                    PhotoPath = table.Column<string>(nullable: true),
+                    MusicPath = table.Column<string>(nullable: true),
+                    lyricName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

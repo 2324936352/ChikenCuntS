@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LPFW.ORM.Migrations
 {
     [DbContext(typeof(LpDbContext))]
-    [Migration("20200622052711_lpApp001")]
+    [Migration("20200623002122_lpApp001")]
     partial class lpApp001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -622,11 +622,7 @@ namespace LPFW.ORM.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ClassName")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
+                    b.Property<string>("MusicPath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -635,6 +631,15 @@ namespace LPFW.ORM.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("PhotoPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SingerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TypeName")
+                        .HasColumnType("int");
+
+                    b.Property<string>("lyricName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LPFW.ViewModels.MusicViewModel
 {
-    public class StudentCreateViewModel
+    public class MusicCoreViewModel
     {
 
         
@@ -22,10 +22,10 @@ namespace LPFW.ViewModels.MusicViewModel
         public string SingerName { get; set; }
 
         [Display(Name = "歌曲文件")]
-        public string MusicPath { get; set; }
+        public List<IFormFile> MusicPath { get; set; }
 
         [Display(Name = "歌词文件")]
-        public string lyricName { get; set; }
+        public List<IFormFile> lyricPath { get; set; }
 
         [Display(Name="歌曲图片")]
         public List<IFormFile> Photos { get; set; }

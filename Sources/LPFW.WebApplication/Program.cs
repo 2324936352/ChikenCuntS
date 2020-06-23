@@ -90,6 +90,8 @@ namespace LPFW.WebApplication
                     options.Limits.MaxRequestBodySize = long.MaxValue;
                     options.Limits.MaxRequestBufferSize = long.MaxValue;
                     options.Limits.MaxRequestLineSize = int.MaxValue;
+                    //设置应用服务器Kestrel请求体最大为50MB
+                    options.Limits.MaxRequestBodySize = 52428800;
                 }).UseStartup<Startup>();
                 
                 // 构建配置

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LPFW.ViewModels.MusicViewModel
 {
-    public class StudentEditVidewModel:StudentCreateViewModel
+    public class StudentEditVidewModel:MusicCoreViewModel
     {
 
         public int Id { get; set; }

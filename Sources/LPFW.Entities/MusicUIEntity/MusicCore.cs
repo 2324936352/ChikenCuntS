@@ -26,7 +26,7 @@ namespace LPFW.EntitiyModels.MusicUIEntity
         public string MusicPath { get; set; }
 
         [Display(Name = "歌词文件")]
-        public string lyricName { get; set; }
+        public string lyricPath { get; set; }
 
 
 
