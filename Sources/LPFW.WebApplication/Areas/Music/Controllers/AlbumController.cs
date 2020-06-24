@@ -13,14 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LPFW.WebApplication.Areas.Music.Controllers
 {
     [Area("Music")]
-    /// <summary>
-    /// 用于管理音乐专辑的控制器
-    /// 1.前置条件:已实现Music、Album
-    /// 2.只有管理员用户才能访问这个控制器
-    /// 3.通过用户识别用户管理员ID
-    /// 4.参考DemoEntityPaginationController控制器
-
-    /// </summary>
+   
     public class AlbumController : BasePaginationTemplateController<Album, AlbumViewModel>
     {
         /// <summary>
@@ -35,11 +28,11 @@ namespace LPFW.WebApplication.Areas.Music.Controllers
             ListItems = new List<TableListItem>()
             {
                 new TableListItem() { PropertyName = "OrderNumber", DsipalyName="序号", Width=60, IsSort = false, SortDesc="" },
-                new TableListItem() { PropertyName = "Name", DsipalyName="专辑名称", Width=0, IsSort =false, SortDesc=""  },
+                new TableListItem() { PropertyName = "Name", DsipalyName="专辑名称", Width=40, IsSort =false, SortDesc=""  },
                 //new TableListItem() { PropertyName = "SortCode", DsipalyName="编码", Width=150, IsSort = true, SortDesc=""},   // 如果将 SortCode 设置为自动生成，一般就不在列表中显示了
                 new TableListItem() { PropertyName = "SingerName", DsipalyName = "歌手", IsSort = false, SortDesc = "", Width =50},
-                new TableListItem() { PropertyName = "IssueTime", DsipalyName = "发行时间", IsSort = false, SortDesc = "", Width = 100 },
-                new TableListItem() { PropertyName = "Price", DsipalyName = "价格", IsSort = false, SortDesc = "", Width = 100 },
+                new TableListItem() { PropertyName = "IssueTime", DsipalyName = "发行时间", IsSort = false, SortDesc = "", Width = 60 },
+                new TableListItem() { PropertyName = "Price", DsipalyName = "价格", IsSort = false, SortDesc = "", Width = 40 },
 
             };
 
@@ -48,7 +41,7 @@ namespace LPFW.WebApplication.Areas.Music.Controllers
             {
                 new CreateOrEditItem() { PropertyName = "Name", TipsString="", DataType = ViewModelDataType.单行文本 },
                 new CreateOrEditItem() { PropertyName = "SingerName", TipsString="", DataType = ViewModelDataType.单行文本 },
-                //new CreateOrEditItem() { PropertyName = "MusicTypeId", TipsString = "", DataType = ViewModelDataType.层次下拉单选一},
+                new CreateOrEditItem() { PropertyName = "MusicTypeId", TipsString = "", DataType = ViewModelDataType.层次下拉单选一},
                 new CreateOrEditItem() { PropertyName = "IssueTime", TipsString="", DataType = ViewModelDataType.日期},   // 如果将 SortCode 设置为自动生成，这个隐含的数据是必须的
                 new CreateOrEditItem() { PropertyName = "Price", TipsString="", DataType = ViewModelDataType.单行文本 },
                 //new CreateOrEditItem() { PropertyName = "Price", TipsString="", DataType = ViewModelDataType.单行文本},
@@ -60,6 +53,7 @@ namespace LPFW.WebApplication.Areas.Music.Controllers
                 new DetailItem() { PropertyName = "Name", DataType = ViewModelDataType.单行文本  },
                 new DetailItem() { PropertyName = "SingerName", DataType = ViewModelDataType.单行文本 },
                 new DetailItem() { PropertyName = "IssueTime", DataType = ViewModelDataType.单行文本 },
+                 new DetailItem() { PropertyName = "MusicTypeId", DataType = ViewModelDataType.单行文本 },
                 new DetailItem() { PropertyName = "Price", DataType = ViewModelDataType.单行文本 },
             };
         }

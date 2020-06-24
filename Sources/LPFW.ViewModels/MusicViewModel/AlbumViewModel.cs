@@ -26,10 +26,14 @@ namespace LPFW.ViewModels.MusicViewModel
         [Display(Name = "图片路径")]
         public string PhotoUrl { get; set; }
         [Display(Name = "价格")]
+        [Required(ErrorMessage = "请输入数字")]
+        [RegularExpression(@"^\d{1,10}(\.\d{1,2})?$",ErrorMessage = "请输入数字")]
         public decimal Price { get; set; }
 
         //public virtual MusicEntity MusicId { get; set; }//音乐上级数据
-
+        public string MusicTypeId { get; set; }
+        public string MusicTypeName { get; set; }
+      
         public string MusicId { get; set; }
         public string MusicName { get; set; }
         public List<SelfReferentialItem> AlbumItemCollection { get; set; }

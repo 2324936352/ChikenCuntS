@@ -133,6 +133,9 @@ namespace LPFW.WebApplication.Helpers
             //音乐类型依赖注入
             services.AddScoped<IEntityRepository<MusicTypeEntity>, EntityRepository<MusicTypeEntity>>();
             services.AddScoped<IViewModelService<MusicTypeEntity, MusicTypeViewModel>, ViewModelService<MusicTypeEntity, MusicTypeViewModel>>();
+            //专辑
+            services.AddScoped<IEntityRepository<Album>, EntityRepository<Album>>();
+            services.AddScoped<IViewModelService<Album, AlbumViewModel>, ViewModelService<Album , AlbumViewModel>>();
 
             #endregion
         }

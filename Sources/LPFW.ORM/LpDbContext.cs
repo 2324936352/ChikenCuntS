@@ -101,15 +101,15 @@ namespace LPFW.ORM
         public DbSet<MusicCore> MusicCores { get; set; }
         //public DbSet<MusicUser> MusicUsers { get; set; }
         #region 音乐堡垒实体
-        //public DbSet<Album> Albums { get; set; }//
-        //public DbSet<AlbumWithMusics> AlbumWithMusics { get; set; }
+        public DbSet<Album> Albums { get; set; }
+       public DbSet<AlbumWithMusics> AlbumWithMusics { get; set; }
         public DbSet<MusicEntity> Music { get; set; }
         public DbSet<MusicTypeEntity> MusicType { get; set; }
 
-        //public DbSet<MusicManagement> MusicManagements { get; set; }
+        public DbSet<MusicManagement> MusicManagements { get; set; }
 
-        //public DbSet<Power> Powers { get; set; }
-        //public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<Power> Powers { get; set; }
+       public DbSet<UserInfo> UserInfos { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder builder) {

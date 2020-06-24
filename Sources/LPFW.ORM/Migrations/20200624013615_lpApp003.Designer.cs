@@ -4,14 +4,16 @@ using LPFW.ORM;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LPFW.ORM.Migrations
 {
     [DbContext(typeof(LpDbContext))]
-    partial class LpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200624013615_lpApp003")]
+    partial class lpApp003
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -567,9 +569,6 @@ namespace LPFW.ORM.Migrations
                     b.Property<Guid?>("MusicEntityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("MusicTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -590,8 +589,6 @@ namespace LPFW.ORM.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MusicEntityId");
-
-                    b.HasIndex("MusicTypeId");
 
                     b.ToTable("Albums");
                 });
@@ -2473,10 +2470,6 @@ namespace LPFW.ORM.Migrations
                     b.HasOne("LPFW.EntitiyModels.MusicEntity.Album", "MusicEntity")
                         .WithMany()
                         .HasForeignKey("MusicEntityId");
-
-                    b.HasOne("LPFW.EntitiyModels.MusicEntity.MusicTypeEntity", "MusicType")
-                        .WithMany()
-                        .HasForeignKey("MusicTypeId");
                 });
 
             modelBuilder.Entity("LPFW.EntitiyModels.MusicEntity.AlbumWithMusics", b =>

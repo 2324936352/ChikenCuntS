@@ -7,7 +7,7 @@
     <title>@ViewBag.Title</title>
     <environment include="Development">
 
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        @*<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />*@
         @*<link href="~/css/MusicStyle.css" rel="stylesheet" />*@
 
         <link href="~/Music/css/iconfont.css" rel="stylesheet" />
@@ -134,14 +134,7 @@
     @*<script src="~/Music/js/jquery-1.11.3.min.js"></script>*@
 
     <script src="~/Music/css/iconfont.js"></script>
-    <script>
-        //window.onload(function () {
-        //
-        //})
-        $(function () {
-            initMusic();//初始化
-        });
-    </script>
+   
     @RenderSection("Scripts", required: false)
 
 </body>

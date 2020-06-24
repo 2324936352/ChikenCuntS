@@ -18,7 +18,7 @@ namespace LPFW.EntitiyModels.MusicEntity
 
         public string PhotoUrl { get; set; }//专辑图片路径
 
-       
+        public virtual MusicTypeEntity MusicType { get; set; }//音乐类型
 
         public virtual Album MusicEntity { get; set; }
         public Album()

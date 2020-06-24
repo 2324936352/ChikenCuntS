@@ -2,12 +2,10 @@
 var songList = new Array();//歌词列表
 var index;//当前播放歌曲索引
 var max = 0;//总歌曲数量
-var volume = 10;//音量
-var playStyle = 2;//播放风格:1=顺序播放,2=列表循环,3=随机播放,4=单曲循环
-var lyricColor = 3;//歌词颜色 1 = lightgreen，2 = lightpink，3 = yellow
-//var lyricColor = Math.floor((Math.random() * 3) + 1);//随机歌词颜色
+var volume = 20;//音量
+var playStyle = 1;//播放风格:1=顺序播放,2=列表循环,3=随机播放,4=单曲循环
+var lyricColor = 1;//歌词颜色 1 = lightgreen，2 = lightpink，3 = yellow
 var nowColorNum = lyricColor;//当前歌词显示颜色
-var medisArray = [];   // 存放歌词
 
 //初始化----------------------------------------------------------------------
 
@@ -16,12 +14,11 @@ var medisArray = [];   // 存放歌词
  */
 function initMusic() {
     initJqueryObject();//初始化Jquery对象
-    // index = 1;//设置默认歌曲索引
+    index = 1;//设置默认歌曲索引
     changePlayStyle(playStyle);//设置播放样式
     getMusicList();
     getSong();//获取歌曲列表
     getMaxSongNum();//获取歌曲列表总数
-    index = Math.floor((Math.random() * max) + 1);//随机歌曲
     changeVolumeBar(volume);//设置小滑块位置并且设置音量
     getSongName(index);//获取歌曲名字
     changeSongNameColor(index);//改变当选中歌曲样式
@@ -35,6 +32,7 @@ function initMusic() {
         //jQuery对象
         $musicL = $(".MusicL");//歌词显示控件
         $playStyleClass = $(".playStyle");//播放样式图标
+        $playStyleID = $("#playStyle");//播放样式信息显示
         $myMusic = $("#myMusic");//audio控件
         $songFace = $("#songFace");//歌曲封面控件
         $songName = $("#songName");//歌曲名称控件
@@ -130,20 +128,11 @@ function initMusic() {
         let _left = (timer / resTimer) * allWidth
         $progressBar.css("transform", "translate(" + _left + "px,-7px)");
         $progressBg.css("width", _left + "px");
-        let lyricIndex = 0;
-        for (let i = 0; i < medisArray.length; i++) {
-            if (timer.toFixed(3) >= parseFloat(medisArray[i].tt)) {
-                lyricIndex = i;
-            }
+        let s = parseInt(timer);
+        for (let i = 0; i < s; i++) {
+            $("#" + i).addClass("sizeC color" + nowColorNum).siblings().removeClass("sizeC color" + nowColorNum);
+            $musicL.scrollTop(($(".color" + nowColorNum).index() - 5) * 25);
         }
-        $("#lyric" + lyricIndex).addClass("sizeC color" + nowColorNum).siblings().removeClass("sizeC color" + nowColorNum);
-        $(".color" + nowColorNum).fadeIn(200);
-        $musicL.scrollTop(($(".color" + nowColorNum).index() - 5) * 25);
-        // let s = parseInt(timer);
-        // for (let i = 0; i < s; i++) {
-        //     $("#" + i).addClass("sizeC color" + nowColorNum).siblings().removeClass("sizeC color" + nowColorNum);
-        //     $musicL.scrollTop(($(".color" + nowColorNum).index() - 5) * 25);
-        // }
         if (timer == resTimer) {//当歌曲播放到结尾
             if (playStyle == 4) {//单曲循环，调用重新播放函数
                 replay();
@@ -156,8 +145,7 @@ function initMusic() {
         if (!isNaN(resTimer)) {
             $timeInfo.html(changeToTime(timer) + "/" + changeToTime(resTimer));
         }
-    }
-    );
+    });
 
     /**
      * 绑定时间小滑块控制事件
@@ -204,16 +192,6 @@ function initMusic() {
         var s = msTime - (m * 60);
         return m + ":" + s;
     }
-
-
-    /**
-     * 搜索框
-     */
-    $("#searchAlert").bind("click", function () {
-        $(".search").fadeToggle(600);
-
-    });
-
 }
 
 //播放样式-------------------------------------------------------------------
@@ -228,25 +206,28 @@ function playStyleClick() {
  * 改变播放样式
  */
 function changePlayStyle(styleNum) {
-    if (styleNum == 1) {
-        playStyle = 1;
-    }
     let strClass = "";
+    let strId = "";
     switch (styleNum) {
         case 1:
             strClass = "iconfont icon-liebiaoshunxu playStyle";
+            strId = "顺序播放";
             break;
         case 2:
             strClass = "iconfont icon-liebiaoxunhuan playStyle";
+            strId = "列表循环";
             break;
         case 3:
             strClass = "iconfont icon-suijibofang01 playStyle";
+            strId = "随机播放";
             break;
         case 4:
             strClass = "iconfont icon-danquxunhuan playStyle";
+            strId = "单曲循环";
             break;
     }
     $playStyleClass.attr("class", strClass);
+    $playStyleID.html(strId);
 }
 
 //播放控制-------------------------------------------------------------------
@@ -351,13 +332,12 @@ function ableOrEnableVolume() {
     let volume = $myMusic[0].muted;
     if (!volume) {
         $myMusic[0].muted = true;
-        $volume.removeClass("icon-shengyin");
-        $volume.addClass("icon-shengjingyin");
-
+        $volume.addClass("icon-jingyin");
+        $volume.removeClass("icon-icon_huabanfuben");
     } else {
         $myMusic[0].muted = false;
-        $volume.addClass("icon-shengyin");
-        $volume.removeClass("icon-shengjingyin");
+        $volume.removeClass("icon-jingyin");
+        $volume.addClass("icon-icon_huabanfuben");
     }
 }
 
@@ -415,35 +395,10 @@ function getSongName(i) {
     changeSongStatus(songName);
 }
 
+
 /**
  * 解析歌词
  */
-function getLyric(text) {
-    medisArray.length = 0;
-    let texts = text.split("\n");    // 用换行符拆分获取到的歌词
-    //console.log(text)
-    $.each(texts, function (i, item) {    // 遍历texts，并且将时间和文字拆分开，并push进自己定义的数组，形成一个对象数组
-        let t = item.substring(item.indexOf("[") + 1, item.indexOf("]"));
-        let tt = (t.split(":")[0] * 60 + parseFloat(t.split(":")[1])).toFixed(3)
-        let c = item.substring(item.indexOf("]") + 1, item.length);
-        if (!isNaN(tt)) {
-            medisArray.push({
-                tt: tt,
-                c: c
-            });
-        }
-        let p = "";
-        // 遍历medisArray，并且生成p标签，将数组内的文字放入p标签
-        $.each(medisArray, function (i, item) {
-            p += "<p id=lyric" + i + ">" + item.c + "</p>";
-        });
-        $lyric.html(p);
-    });
-    // console.log(medisArray);
-}
-
-
-/*
 function getLyric(text) {
     let p = "";
     let lyricArray = text.split('[');
@@ -453,13 +408,12 @@ function getLyric(text) {
         let stime = timer[0].split(':');
         let ms = stime[0] * 60 + stime[1] * 1;
         let songLrc = arr[1];
-        if (songLrc && !isNaN(ms)) {
+        if (songLrc) {
             p += "<p id=" + ms + ">" + songLrc + "</p>";
             $lyric.html(p);
         }
     }
 }
-*/
 
 //修改和设置值函数-----------------------------------------------------------
 
@@ -485,7 +439,7 @@ function setVolume(value) {
  * 移动歌曲列表
  */
 function scrollSongList() {
-    index % 6 == 0 ? changeScroolTop(parseInt(index / 6) - 1) : changeScroolTop(parseInt(index / 6));
+    index % 7 == 0 ? changeScroolTop(parseInt(index / 7) - 1) : changeScroolTop(parseInt(index / 7));
 }
 
 /**
@@ -597,10 +551,10 @@ function loadFile(name) {
     let xhr = new XMLHttpRequest(),
         okStatus = document.location.protocol === "file:" ? 0 : 200;
     xhr.open('GET', name, false);
-    xhr.overrideMimeType("text/html;charset=utf-8");
+    xhr.overrideMimeType("text/html;charset=gbk");
     xhr.send(null);
-    return xhr.responseText;
-    //return xhr.status === okStatus ? xhr.responseText : null;
+   //return xhr.status === okStatus ? xhr.responseText : null;
+    return  xhr.responseText;
 }
 
 
