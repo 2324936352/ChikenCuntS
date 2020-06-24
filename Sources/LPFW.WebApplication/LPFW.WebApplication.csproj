@@ -64,7 +64,6 @@
     <Folder Include="wwwroot\lib\jsTree\" />
     <Folder Include="wwwroot\Music\css\" />
     <Folder Include="wwwroot\Music\js\" />
-    <Folder Include="wwwroot\Music\music\" />
     <Folder Include="wwwroot\uploadFiles\images\" />
     <Folder Include="wwwroot\uploadFiles\avatars\" />
   </ItemGroup>
